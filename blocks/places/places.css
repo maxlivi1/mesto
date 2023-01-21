@@ -1,0 +1,9 @@
+.places {
+  margin: 51px 200px 0 200px;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px 17px;
+}
