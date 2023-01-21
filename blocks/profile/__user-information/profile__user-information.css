@@ -1,0 +1,9 @@
+.profile__user-information {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

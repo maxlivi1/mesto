@@ -1,0 +1,13 @@
+.profile__info {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 18px 16px;
+  max-width: 336px;
+  min-width: 336px;
+  margin-right: auto;
+}

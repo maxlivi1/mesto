@@ -12,6 +12,8 @@
   line-height: 22px;
   color: #fff;
 
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
   border: 1px solid goldenrod;
-  min-height: 800px;
 }
