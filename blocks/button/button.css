@@ -7,4 +7,10 @@
   align-items: center;
   text-decoration: none;
   border: 1px solid #fff;
+
+  transition: opacity 0.5s ease-in;
+}
+
+.button:hover {
+  opacity: .6;
 }

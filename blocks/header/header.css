@@ -7,3 +7,24 @@
   align-items: flex-start;
   border-bottom: 1px solid rgba(84, 84, 84, .7);
 }
+
+@media screen and (max-width: 1279px) {
+  .header {
+    margin-left: 70px;
+    margin-right: 70px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .header {
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .header {
+    margin: 28px 0 0 0;
+    padding: 0 0 31.6px 27px;
+  }
+}
