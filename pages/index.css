@@ -6,6 +6,18 @@
 
 @import url(../blocks/page/page.css);
 
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/__container/popup__container.css);
+@import url(../blocks/popup/_opened/popup_opened.css);
+
+@import url(../blocks/user_edit-form/user_edit_form.css);
+@import url(../blocks/user_edit-form/__title/user_edit-form__title.css);
+@import url(../blocks/user_edit-form/__editable-information/user_edit-form__editable-information.css);
+@import url(../blocks/user_edit-form/__name/user_edit-form__name.css);
+@import url(../blocks/user_edit-form/__information/user_edit-form__information.css);
+@import url(../blocks/user_edit-form/__btn-save/user_edit-form__btn-save.css);
+
+
 @import url(../blocks/logo/logo.css);
 
 @import url(../blocks/button/button.css);
@@ -19,6 +31,7 @@
 @import url(../blocks/profile/__user-information/profile__user-information.css);
 @import url(../blocks/profile/__user-name/profile__user-name.css);
 @import url(../blocks/profile/__btn-edit/profile__btn-edit.css);
+@import url(../blocks/user_edit-form/__btn-close/user_edit-form__btn-close.css);
 
 @import url(../blocks/places/places.css);
 
