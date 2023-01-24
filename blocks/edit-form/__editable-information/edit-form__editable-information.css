@@ -1,4 +1,4 @@
-.user_edit-form__editable-information {
+.edit-form__editable-information {
   margin: 54px 0 48px 0;
   padding: 0;
   box-sizing: border-box;
@@ -9,7 +9,7 @@
 }
 
 @media screen and (max-width: 500px) {
-  .user_edit-form__editable-information {
+  .edit-form__editable-information {
     margin: 75px 0 45px 0;
   }
 }

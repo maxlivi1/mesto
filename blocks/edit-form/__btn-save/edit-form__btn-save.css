@@ -1,4 +1,4 @@
-.user_edit-form__btn-save {
+.edit-form__btn-save {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -9,13 +9,13 @@
   min-height: 50px;
 }
 
-.user_edit-form__btn-save:hover {
+.edit-form__btn-save:hover {
   opacity: .8;
   cursor: pointer;
 }
 
 @media screen and (max-width: 500px) {
-  .user_edit-form__btn-save {
+  .edit-form__btn-save {
     font-size: 14px;
     line-height: 17px;
     min-height: 46px;

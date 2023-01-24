@@ -1,4 +1,4 @@
-.user_edit-form__title {
+.edit-form__title {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -11,7 +11,7 @@
 }
 
 @media screen and (max-width: 500px) {
-  .user_edit-form__title {
+  .edit-form__title {
     font-size: 18px;
     line-height: 22px;
   }
