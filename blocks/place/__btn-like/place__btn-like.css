@@ -10,7 +10,7 @@
   background-position: center;
   background-size: 100%;
 
-  transition: opacity 0.5s ease-in;
+  border: 0;
 }
 
 .place__btn-like:hover {

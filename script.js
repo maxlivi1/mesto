@@ -32,5 +32,5 @@ function saveFormEdit(evt) {
 
 buttonFormOpen.addEventListener("click", openFormEdit);
 buttonFormClose.addEventListener("click", closeFormEdit);
-buttonFormSave.addEventListener("click", saveFormEdit);
+editForm.addEventListener("submit", saveFormEdit);
 

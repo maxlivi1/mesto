@@ -4,6 +4,11 @@
   box-sizing: border-box;
 
   max-width: 336px;
+  min-width: 336px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 425px) {
@@ -12,5 +17,6 @@
     font-size: 14px;
     line-height: 17px;
     max-width: 282px;
+    min-width: 282px;
   }
 }
