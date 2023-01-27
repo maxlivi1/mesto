@@ -6,7 +6,6 @@
   font-weight: 900;
   font-size: 24px;
   line-height: 29px;
-  height: 23px;
 
   color: #000;
 }
@@ -15,6 +14,5 @@
   .edit-form__title {
     font-size: 18px;
     line-height: 22px;
-    height: 22px;
   }
 }

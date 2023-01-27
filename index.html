@@ -14,13 +14,13 @@
     </header>
     <main class="content">
       <section class="profile">
-        <img class="profile__avatar" src="./images/avatar.png" alt="Аватарка"></img>
+        <img class="profile__avatar" src="./images/avatar.png" alt="Аватарка">
         <div class="profile__info">
           <h1 id="profile-name" class="profile__user-name">Жак-Ив Кусто</h1>
-          <button type="button" id="button_open-form" class="button profile__btn-edit"></button>
+          <button type="button" id="button_open-form" class="button profile__btn-edit" aria-label="Редактировать"></button>
           <p id="profile-info" class="profile__user-information">Исследователь океана</p>
         </div>
-        <button type="button" id="button_add" class="button button_role_add-place"></button>
+        <button type="button" id="button_add" class="button button_role_add-place" aria-label="Добавить"></button>
       </section>
       <section class="places">
         <article class="place">
@@ -73,14 +73,14 @@
     <div id="popup-edit" class="popup">
       <div class="popup__container">
         <form name="profile-form" id="edit-form" class="edit-form" action="#">
-          <h2 class="edit-form__title">Редактировать профиль</h2>
+          <h3 class="edit-form__title">Редактировать профиль</h3>
           <fieldset class="edit-form__editable-information">
             <input id="edit-form__name" class="popup__input popup__input_type_name" type="text" placeholder="Ваше имя">
             <input id="edit-form__information" class="popup__input popup__input_type_job" type="text" placeholder="Ваша профессия или призвание">
           </fieldset>
           <button id="edit-form__btn-save" class="button edit-form__btn-save" type="submit">Сохранить</button>
         </form>
-        <button type="button" id="popup__btn-close" class="button popup__btn-close"></button>
+        <button type="button" id="popup__btn-close" class="button popup__btn-close" aria-label="Закрыть"></button>
       </div>
     </div>
   </div>

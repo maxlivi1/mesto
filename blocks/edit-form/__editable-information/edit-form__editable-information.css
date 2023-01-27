@@ -1,5 +1,5 @@
 .edit-form__editable-information {
-  margin: 54px 0 48px 0;
+  margin: 46px 0 47px 0;
   padding: 0;
   box-sizing: border-box;
   display: flex;
@@ -10,6 +10,6 @@
 
 @media screen and (max-width: 550px) {
   .edit-form__editable-information {
-    margin: 75px 0 45px 0;
+    margin: 73px 0 45px 0;
   }
 }
