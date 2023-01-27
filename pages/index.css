@@ -9,7 +9,7 @@
 @import url(../blocks/logo/logo.css);
 
 @import url(../blocks/button/button.css);
-@import url(../blocks/button/_add/button_add.css);
+@import url(../blocks/button/_role_add-place/button_role_add-place.css);
 
 @import url(../blocks/header/header.css);
 
@@ -38,10 +38,9 @@
 @import url(../blocks/popup/__container/popup__container.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
 @import url(../blocks/popup/__btn-close/popup__btn-close.css);
+@import url(../blocks/popup/__input/popup__input.css);
 
-@import url(../blocks/edit-form/edit_form.css);
+@import url(../blocks/edit-form/edit-form.css);
 @import url(../blocks/edit-form/__title/edit-form__title.css);
 @import url(../blocks/edit-form/__editable-information/edit-form__editable-information.css);
-@import url(../blocks/edit-form/__name/edit-form__name.css);
-@import url(../blocks/edit-form/__information/edit-form__information.css);
 @import url(../blocks/edit-form/__btn-save/edit-form__btn-save.css);

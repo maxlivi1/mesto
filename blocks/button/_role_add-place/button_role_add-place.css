@@ -1,14 +1,16 @@
-.button_add {
-  width: 150px;
-  height: 50px;
+.button_role_add-place {
+  min-width: 150px;
+  min-height: 50px;
   background-image: url(../../../images/svg/button_add.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 22px;
+  border: 2px solid #fff;
+  border-radius: 2px;
 }
 
 @media screen and (max-width: 425px) {
-  .button_add {
+  .button_role_add-place {
     width: 100%;
   }
 }
