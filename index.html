@@ -22,7 +22,7 @@
         </div>
         <button type="button" id="button_add" class="button button_role_add-place" aria-label="Добавить"></button>
       </section>
-      <section class="places">
+      <section class="places" aria-label="Места">
         <article class="place">
           <img class="place__photo" src="./images/photo/karachaevsk.jpg" alt="Карачаевск">
           <div class="place__info">
@@ -75,8 +75,8 @@
         <form name="profile-form" id="edit-form" class="edit-form" action="#">
           <h3 class="edit-form__title">Редактировать профиль</h3>
           <fieldset class="edit-form__editable-information">
-            <input id="edit-form__name" class="popup__input popup__input_type_name" type="text" placeholder="Ваше имя">
-            <input id="edit-form__information" class="popup__input popup__input_type_job" type="text" placeholder="Ваша профессия или призвание">
+            <input name="edit-form__name" id="edit-form__name" class="popup__input popup__input_type_name" type="text" placeholder="Ваше имя">
+            <input name="edit-form__information" id="edit-form__information" class="popup__input popup__input_type_job" type="text" placeholder="Ваша профессия или призвание">
           </fieldset>
           <button id="edit-form__btn-save" class="button edit-form__btn-save" type="submit">Сохранить</button>
         </form>
@@ -84,6 +84,6 @@
       </div>
     </div>
   </div>
-  <script src="./script.js"></script>
+  <script src="./index.js"></script>
 </body>
 </html>
