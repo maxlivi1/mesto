@@ -12,5 +12,6 @@
 @media screen and (max-width: 425px) {
   .button_role_add-place {
     width: 100%;
+    background-size: 16px;
   }
 }

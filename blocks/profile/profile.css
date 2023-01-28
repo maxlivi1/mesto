@@ -25,7 +25,7 @@
 
 @media screen and (max-width: 425px) {
   .profile {
-    margin: 38px 19px 0 19px;
+    margin: 42px 19px 0 19px;
     justify-content: center;
     gap: 0;
   }

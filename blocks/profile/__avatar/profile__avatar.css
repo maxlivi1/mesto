@@ -4,3 +4,9 @@
   object-fit: contain;
   object-position: center;
 }
+
+@media screen and (max-width: 425px) {
+  .profile__avatar {
+    margin: 0 0 0 2px;
+  }
+}
