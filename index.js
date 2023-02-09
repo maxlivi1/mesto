@@ -76,6 +76,8 @@ function saveFormEdit(evt) {
 function addNewPlace(evt) {
   evt.preventDefault();
   // код для добавление карточки места
+
+  // конец
   closeFormAdd();
 }
 
@@ -103,3 +105,20 @@ initialCards.forEach((item) => {
   // отображаем на странице
   placesCards.append(placeCardElement);
 });
+
+function addNewPlace(evt) {
+  evt.preventDefault();
+  // код для добавление карточки места
+  // клонируем содержимое тега template
+  const placeCardElement = placeCardTemplate.querySelector('.place').cloneNode(true);
+
+  // наполняем содержимым
+  placeCardElement.querySelector('.place__photo').src = addFormLink.value.trim();
+  placeCardElement.querySelector('.place__photo').alt = 'Фото ' + addFormLink.value.trim();
+  placeCardElement.querySelector('.place__name').textContent = addFormName.value.trim();
+
+  // отображаем на странице, в начале списка
+  placesCards.prepend(placeCardElement);
+  // конец
+  closeFormAdd();
+}
