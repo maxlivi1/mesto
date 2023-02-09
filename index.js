@@ -93,6 +93,9 @@ initialCards.forEach((item) => {
   // добавляем слушателя к кнопке лайк
   addListenerForLike(placeCardElement.querySelector('.place__btn-like'));
 
+  // добавляем слушателя к кнопке удалить
+  addListenerForDelete(placeCardElement.querySelector('.place__btn-delete'));
+
   // отображаем на странице
   placesCards.append(placeCardElement);
 });
@@ -107,11 +110,14 @@ function addNewPlace(evt) {
 
   // наполняем содержимым
   placeCardElement.querySelector('.place__photo').src = addFormLink.value.trim();
-  placeCardElement.querySelector('.place__photo').alt = 'Фото ' + addFormLink.value.trim();
+  placeCardElement.querySelector('.place__photo').alt = 'Фото ' + addFormName.value.trim();
   placeCardElement.querySelector('.place__name').textContent = addFormName.value.trim();
 
   // добавляем слушателя к кнопке лайк
   addListenerForLike(placeCardElement.querySelector('.place__btn-like'));
+
+  // добавляем слушателя к кнопке удалить
+  addListenerForDelete(placeCardElement.querySelector('.place__btn-delete'));
 
   // отображаем карточку на странице, в начале списка
   placesCards.prepend(placeCardElement);
@@ -131,3 +137,13 @@ function makeLike(event) {
 function addListenerForLike (button) {
   button.addEventListener('click', makeLike);
 }
+
+function deletePlace(event) {
+  const place = event.target.closest('.place');
+  place.remove();
+}
+
+function addListenerForDelete (button) {
+  button.addEventListener('click', deletePlace);
+}
+
