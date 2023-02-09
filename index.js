@@ -73,21 +73,9 @@ function saveFormEdit(evt) {
   closeFormEdit();
 }
 
-function addNewPlace(evt) {
-  evt.preventDefault();
-  // код для добавление карточки места
-
-  // конец
-  closeFormAdd();
-}
-
 buttonFormOpen.addEventListener('click', openFormEdit);
 buttonEditClose.addEventListener('click', closeFormEdit);
 editForm.addEventListener('submit', saveFormEdit);
-
-buttonAdd.addEventListener('click', openFormAdd);
-buttonAddClose.addEventListener('click', closeFormAdd);
-addForm.addEventListener('submit', addNewPlace);
 
   // вытаскиваем контент из шаблона
 const placeCardTemplate = document.querySelector('#place-card').content;
@@ -102,13 +90,18 @@ initialCards.forEach((item) => {
   placeCardElement.querySelector('.place__photo').alt = 'Фото ' + item.name;
   placeCardElement.querySelector('.place__name').textContent = item.name;
 
+  // добавляем слушателя к кнопке лайк
+  addListenerForLike(placeCardElement.querySelector('.place__btn-like'));
+
   // отображаем на странице
   placesCards.append(placeCardElement);
 });
 
 function addNewPlace(evt) {
   evt.preventDefault();
+
   // код для добавление карточки места
+
   // клонируем содержимое тега template
   const placeCardElement = placeCardTemplate.querySelector('.place').cloneNode(true);
 
@@ -117,8 +110,24 @@ function addNewPlace(evt) {
   placeCardElement.querySelector('.place__photo').alt = 'Фото ' + addFormLink.value.trim();
   placeCardElement.querySelector('.place__name').textContent = addFormName.value.trim();
 
-  // отображаем на странице, в начале списка
+  // добавляем слушателя к кнопке лайк
+  addListenerForLike(placeCardElement.querySelector('.place__btn-like'));
+
+  // отображаем карточку на странице, в начале списка
   placesCards.prepend(placeCardElement);
   // конец
+
   closeFormAdd();
+}
+
+buttonAdd.addEventListener('click', openFormAdd);
+buttonAddClose.addEventListener('click', closeFormAdd);
+addForm.addEventListener('submit', addNewPlace);
+
+function makeLike(event) {
+  event.target.classList.toggle('place__btn-like_active');
+}
+
+function addListenerForLike (button) {
+  button.addEventListener('click', makeLike);
 }
