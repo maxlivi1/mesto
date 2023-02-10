@@ -53,10 +53,19 @@
         <button type="button" id="form-add__btn-close" class="button popup__btn-close" aria-label="Закрыть"></button>
       </div>
     </div>
+    <div id="popup-image" class="popup popup_place_image">
+      <figure class="popup__image-wrapper">
+        <img class="popup__image" src="./images/photo/karachaevsk.jpg" alt="">
+        <figcaption class="popup__signature"></figcaption>
+        <button type="button" id="form-image__btn-close" class="button popup__btn-close" aria-label="Закрыть"></button>
+      </figure>
+    </div>
   </div>
   <template id="place-card">
     <article class="place">
-      <img class="place__photo" src="" alt="">
+      <a class="place__photo-link" href="#">
+        <img class="place__photo" src="" alt="">
+      </a>
       <div class="place__info">
         <h2 class="place__name"></h2>
         <button type="button" class="button place__btn-like" aria-label="Поставить лайк"></button>
