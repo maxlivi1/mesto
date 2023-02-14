@@ -20,7 +20,7 @@
           <button type="button" id="button_open-form" class="button profile__btn-edit" aria-label="Редактировать"></button>
           <p id="profile-info" class="profile__user-information">Исследователь океана</p>
         </div>
-        <button type="button" id="button_add" class="button button_role_add-place" aria-label="Добавить"></button>
+        <button type="button" id="add-place-btn" class="button button_role_add-place" aria-label="Добавить"></button>
       </section>
       <section class="places" aria-label="Места"></section>
     </main>
@@ -32,8 +32,8 @@
         <form name="profile-form" id="edit-form" class="edit-form" action="#">
           <h3 class="edit-form__title">Редактировать профиль</h3>
           <fieldset class="edit-form__editable-information">
-            <input name="edit-form__name" id="edit-form__name" class="popup__input popup__input_type_name" type="text" placeholder="Ваше имя" autocomplete="0">
-            <input name="edit-form__information" id="edit-form__information" class="popup__input popup__input_type_job" type="text" placeholder="Ваша профессия или призвание" autocomplete="0">
+            <input name="edit-form__name" id="edit-form__name" class="popup__input popup__input_type_name" type="text" placeholder="Ваше имя" autocomplete="off">
+            <input name="edit-form__information" id="edit-form__information" class="popup__input popup__input_type_job" type="text" placeholder="Ваша профессия или призвание" autocomplete="off">
           </fieldset>
           <button id="edit-form__btn-save" class="button edit-form__btn-save" type="submit">Сохранить</button>
         </form>
@@ -45,8 +45,8 @@
         <form name="add-form" id="add-form" class="edit-form" action="#">
           <h3 class="edit-form__title">Новое место</h3>
           <fieldset class="edit-form__editable-information">
-            <input name="add-form__name" id="add-form__name" class="popup__input popup__input_type_name" type="text" placeholder="Название" autocomplete="0">
-            <input name="add-form__link" id="add-form__link" class="popup__input popup__input_type_job" type="text" placeholder="Ссылка на картинку" autocomplete="0">
+            <input name="add-form__name" id="add-form__name" class="popup__input popup__input_type_name" type="text" placeholder="Название" autocomplete="off">
+            <input name="add-form__link" id="add-form__link" class="popup__input popup__input_type_job" type="text" placeholder="Ссылка на картинку" autocomplete="off">
           </fieldset>
           <button id="btn-add" class="button edit-form__btn-save" type="submit">Создать</button>
         </form>
@@ -54,11 +54,13 @@
       </div>
     </div>
     <div id="popup-image" class="popup popup_place_image">
-      <figure class="popup__image-wrapper">
-        <img class="popup__image" src="./images/photo/karachaevsk.jpg" alt="">
-        <figcaption class="popup__signature"></figcaption>
+      <div class="popup__container popup__container_place_image">
+        <figure class="popup__image-wrapper">
+          <img class="popup__image" src="./images/photo/karachaevsk.jpg" alt="">
+          <figcaption class="popup__signature"></figcaption>
+        </figure>
         <button type="button" id="form-image__btn-close" class="button popup__btn-close" aria-label="Закрыть"></button>
-      </figure>
+      </div>
     </div>
   </div>
   <template id="place-card">
