@@ -48,7 +48,6 @@
 @import url(../blocks/popup/__btn-close/popup__btn-close.css);
 @import url(../blocks/popup/__input/popup__input.css);
 @import url(../blocks/popup/__image-wrapper/popup__image-wrapper.css);
-@import url(../blocks/popup/__image-wrapper/_condition/popup__image-wrapper_condition_hide.css);
 @import url(../blocks/popup/__image/popup__image.css);
 @import url(../blocks/popup/__signature/popup__signature.css);
 
@@ -56,5 +55,3 @@
 @import url(../blocks/edit-form/__title/edit-form__title.css);
 @import url(../blocks/edit-form/__editable-information/edit-form__editable-information.css);
 @import url(../blocks/edit-form/__btn-save/edit-form__btn-save.css);
-
-
