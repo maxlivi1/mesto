@@ -67,10 +67,7 @@ function saveProfileInfo(event) {
 
 function deletePlace(event) {
   const place = event.target.closest('.place');
-  place.classList.add('place_condition_hide');
-  setTimeout(() => {
-    place.remove();
-  }, animationTime);
+  place.remove();
 }
 
 buttonOpenPopupEditProfile.addEventListener('click', (e) => {
