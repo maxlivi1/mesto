@@ -28,19 +28,10 @@ const placeCardTemplate = document.querySelector('#place-card').content;
 
 function openPopup (popup) {
   popup.classList.add('popup_opened');
-
-  if (popup === popupEditProfile) {
-    formEditProfileName.value = profileName.textContent;
-    formEditProfileInfo.value = profileInfo.textContent;
-  }
 }
 
 function closePopup (popup) {
   popup.classList.remove('popup_opened');
-
-  if (popup === popupAddNewPlace) {
-    formAddNewPlace.reset();
-  }
 }
 
 function openPopupFullSizeImage (event) {
@@ -73,6 +64,10 @@ function deletePlace(event) {
 buttonOpenPopupEditProfile.addEventListener('click', (e) => {
   e.preventDefault();
   openPopup(popupEditProfile);
+
+  formEditProfileName.value = profileName.textContent;
+  formEditProfileInfo.value = profileInfo.textContent;
+
 });
 
 buttonClosePopupEditProfile.addEventListener('click', (e) => {
@@ -90,11 +85,13 @@ buttonOpenPopupAddNewPlace.addEventListener('click', (e) => {
 buttonClosePopupAddNewPlace.addEventListener('click', (e) => {
   e.preventDefault();
   closePopup(popupAddNewPlace);
+  formAddNewPlace.reset();
 });
 
 formAddNewPlace.addEventListener('submit', (event) => {
   event.preventDefault();
-  addPlaceCard(formAddNewPlaceName.value, formAddNewPlaceImageSrc.value, true);
+  addPlaceCard(formAddNewPlaceName.value, formAddNewPlaceImageSrc.value);
+  closePopup(popupAddNewPlace);
 });
 
 buttonClosePopupOpenFullSizeImage.addEventListener('click', (e) => {
@@ -113,27 +110,20 @@ function createPlaceCard(name, imgSrc) {
   placePhoto.alt = 'Фото ' + name.trim();
   placeName.textContent = name.trim();
 
+  const buttonLike = placeCard.querySelector('.place__btn-like');
+  const buttonDelete = placeCard.querySelector('.place__btn-delete');
+  const buttonOpenImage = placeCard.querySelector('.place__photo');
+
+  buttonLike.addEventListener('click', makeLike);
+  buttonDelete.addEventListener('click', deletePlace);
+  buttonOpenImage.addEventListener('click', openPopupFullSizeImage);
+
   return placeCard;
 }
 
-function addPlaceCard(name, imgSrc, isNew) {
+function addPlaceCard(name, imgSrc) {
   placesCards.prepend(createPlaceCard(name, imgSrc));
-  if (isNew) {
-    closePopup(popupAddNewPlace);
-  }
 }
-
-placesCards.addEventListener('click', (e) => {
-  const classes = e.target.classList;
-
-  if (classes.contains('place__btn-like')) {
-    makeLike(e);
-  } else if (classes.contains('place__btn-delete')) {
-    deletePlace(e);
-  } else if (classes.contains('place__photo')) {
-    openPopupFullSizeImage(e);
-  }
-});
 
 initialCards.forEach((item) => {
   addPlaceCard(item.name, item.link, false);
