@@ -99,6 +99,22 @@ buttonClosePopupOpenFullSizeImage.addEventListener('click', (e) => {
   closePopup(popupOpenFullSizeImage);
 });
 
+function handlerPopupClose (event) {
+  event.preventDefault();
+  const target = event.target;
+  const key = event.key;
+  if (target === popupAddNewPlace || (key === 'Escape' && popupAddNewPlace.classList.contains('popup_opened'))) {
+    closePopup(popupAddNewPlace);
+  } else if (target === popupEditProfile || (key === 'Escape' && popupEditProfile.classList.contains('popup_opened'))) {
+    closePopup(popupEditProfile);
+  } else if (target === popupOpenFullSizeImage || (key === 'Escape' && popupOpenFullSizeImage.classList.contains('popup_opened'))) {
+    closePopup(popupOpenFullSizeImage);
+  }
+}
+
+document.addEventListener('click', handlerPopupClose);
+document.addEventListener('keydown', handlerPopupClose);
+
 function createPlaceCard(name, imgSrc) {
 
   const placeCard = placeCardTemplate.querySelector('.place').cloneNode(true);
