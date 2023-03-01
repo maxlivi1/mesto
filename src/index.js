@@ -9,12 +9,12 @@ const fullSizeImage = popupOpenFullSizeImage.querySelector('.popup__image');
 const signatureForFullSizeImage = popupOpenFullSizeImage.querySelector('.popup__signature');
 
 const formEditProfile = document.querySelector('#edit-form');
-const formEditProfileName = formEditProfile.querySelector('#edit-form__name');
-const formEditProfileInfo = formEditProfile.querySelector('#edit-form__information');
+const formEditProfileName = formEditProfile.querySelector('#edit-form-name');
+const formEditProfileInfo = formEditProfile.querySelector('#edit-form-information');
 
 const formAddNewPlace = document.querySelector('#add-form');
-const formAddNewPlaceName = formAddNewPlace.querySelector('#add-form__name');
-const formAddNewPlaceImageSrc = formAddNewPlace.querySelector('#add-form__link');
+const formAddNewPlaceName = formAddNewPlace.querySelector('#add-form-name');
+const formAddNewPlaceImageSrc = formAddNewPlace.querySelector('#add-form-link');
 
 const buttonClosePopupEditProfile = document.querySelector('#form-edit__btn-close');
 const buttonClosePopupAddNewPlace = document.querySelector('#form-add__btn-close');
@@ -25,6 +25,9 @@ const buttonOpenPopupAddNewPlace = document.querySelector('#add-place-btn');
 const placesCards = document.querySelector('.places');
 
 const placeCardTemplate = document.querySelector('#place-card').content;
+
+formEditProfileName.value = profileName.textContent;
+formEditProfileInfo.value = profileInfo.textContent;
 
 function openPopup (popup) {
   popup.classList.add('popup_opened');
@@ -67,7 +70,6 @@ buttonOpenPopupEditProfile.addEventListener('click', (e) => {
 
   formEditProfileName.value = profileName.textContent;
   formEditProfileInfo.value = profileInfo.textContent;
-
 });
 
 buttonClosePopupEditProfile.addEventListener('click', (e) => {
@@ -92,6 +94,7 @@ formAddNewPlace.addEventListener('submit', (event) => {
   event.preventDefault();
   addPlaceCard(formAddNewPlaceName.value, formAddNewPlaceImageSrc.value);
   closePopup(popupAddNewPlace);
+  formAddNewPlace.reset();
 });
 
 buttonClosePopupOpenFullSizeImage.addEventListener('click', (e) => {
@@ -100,11 +103,11 @@ buttonClosePopupOpenFullSizeImage.addEventListener('click', (e) => {
 });
 
 function handlerPopupClose (event) {
-  event.preventDefault();
   const target = event.target;
   const key = event.key;
   if (target === popupAddNewPlace || (key === 'Escape' && popupAddNewPlace.classList.contains('popup_opened'))) {
     closePopup(popupAddNewPlace);
+    formAddNewPlace.reset();
   } else if (target === popupEditProfile || (key === 'Escape' && popupEditProfile.classList.contains('popup_opened'))) {
     closePopup(popupEditProfile);
   } else if (target === popupOpenFullSizeImage || (key === 'Escape' && popupOpenFullSizeImage.classList.contains('popup_opened'))) {
