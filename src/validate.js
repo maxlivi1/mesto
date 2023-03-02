@@ -48,6 +48,18 @@ function setEventListenersForInput(formElement, settings) {
   });
 }
 
+function resetValidation (formElement, settings) {
+  const inputList = Array.from(formElement.querySelectorAll(settings.inputSelector));
+  inputList.forEach((element) => {
+    element.classList.remove(settings.inputErrorClass);
+    const errorElement = formElement.querySelector(`.${element.id}${settings.inputErrorPostfix}`);
+    errorElement.classList.remove(settings.errorClass);
+    errorElement.textContent = '';
+  });
+  const submitButton = formElement.querySelector(settings.submitButtonSelector);
+  toggleButtonState(inputList, submitButton, settings);
+}
+
 function enableValidation(settings) {
   const formList = Array.from(document.querySelectorAll(settings.formSelector));
   formList.forEach((formElement) => {

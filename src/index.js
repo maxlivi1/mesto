@@ -26,9 +26,6 @@ const placesCards = document.querySelector('.places');
 
 const placeCardTemplate = document.querySelector('#place-card').content;
 
-formEditProfileName.value = profileName.textContent;
-formEditProfileInfo.value = profileInfo.textContent;
-
 function openPopup (popup) {
   popup.classList.add('popup_opened');
 }
@@ -70,11 +67,9 @@ buttonOpenPopupEditProfile.addEventListener('click', (e) => {
 
   formEditProfileName.value = profileName.textContent;
   formEditProfileInfo.value = profileInfo.textContent;
-});
 
-buttonClosePopupEditProfile.addEventListener('click', (e) => {
-  e.preventDefault();
-  closePopup(popupEditProfile);
+  // функция из пакета validate.js (обрабатывает валидацию полей и сабмита при открытии попапа)
+  resetValidation(popupEditProfile, config);
 });
 
 formEditProfile.addEventListener('submit', saveProfileInfo);
@@ -82,12 +77,9 @@ formEditProfile.addEventListener('submit', saveProfileInfo);
 buttonOpenPopupAddNewPlace.addEventListener('click', (e) => {
   e.preventDefault();
   openPopup(popupAddNewPlace);
-});
 
-buttonClosePopupAddNewPlace.addEventListener('click', (e) => {
-  e.preventDefault();
-  closePopup(popupAddNewPlace);
-  formAddNewPlace.reset();
+  // функция из пакета validate.js (обрабатывает валидацию полей и сабмита при открытии попапа)
+  resetValidation(popupAddNewPlace, config);
 });
 
 formAddNewPlace.addEventListener('submit', (event) => {
@@ -97,26 +89,25 @@ formAddNewPlace.addEventListener('submit', (event) => {
   formAddNewPlace.reset();
 });
 
-buttonClosePopupOpenFullSizeImage.addEventListener('click', (e) => {
-  e.preventDefault();
-  closePopup(popupOpenFullSizeImage);
-});
-
-function handlerPopupClose (event) {
+function handlePopupClose (event) {
   const target = event.target;
   const key = event.key;
-  if (target === popupAddNewPlace || (key === 'Escape' && popupAddNewPlace.classList.contains('popup_opened'))) {
+
+  if (target === popupAddNewPlace || (key === 'Escape' && popupAddNewPlace.classList.contains('popup_opened')) || target === buttonClosePopupAddNewPlace) {
     closePopup(popupAddNewPlace);
     formAddNewPlace.reset();
-  } else if (target === popupEditProfile || (key === 'Escape' && popupEditProfile.classList.contains('popup_opened'))) {
+  } else if (target === popupEditProfile || (key === 'Escape' && popupEditProfile.classList.contains('popup_opened')) || target === buttonClosePopupEditProfile) {
     closePopup(popupEditProfile);
-  } else if (target === popupOpenFullSizeImage || (key === 'Escape' && popupOpenFullSizeImage.classList.contains('popup_opened'))) {
+  } else if (target === popupOpenFullSizeImage || (key === 'Escape' && popupOpenFullSizeImage.classList.contains('popup_opened')) || target === buttonClosePopupOpenFullSizeImage) {
     closePopup(popupOpenFullSizeImage);
   }
 }
 
-document.addEventListener('click', handlerPopupClose);
-document.addEventListener('keydown', handlerPopupClose);
+document.addEventListener('click', handlePopupClose);
+document.addEventListener('keydown', handlePopupClose);
+buttonClosePopupOpenFullSizeImage.addEventListener('click', handlePopupClose);
+buttonClosePopupAddNewPlace.addEventListener('click', handlePopupClose);
+buttonClosePopupEditProfile.addEventListener('click', handlePopupClose);
 
 function createPlaceCard(name, imgSrc) {
 
