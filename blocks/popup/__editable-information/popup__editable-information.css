@@ -1,11 +1,10 @@
 .popup__editable-information {
-  margin: 46px 0 47px 0;
+  margin: 46px 0 17px 0;
   padding: 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   border: 0;
-  gap: 30px;
 }
 
 @media screen and (max-width: 550px) {
