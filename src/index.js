@@ -34,17 +34,6 @@ function closePopup (popup) {
   popup.classList.remove('popup_opened');
 }
 
-function openPopupFullSizeImage (event) {
-  event.preventDefault();
-  const place = event.target.closest('.place');
-  const placePhoto = place.querySelector('.place__photo');
-  const placeName = place.querySelector('.place__name');
-  fullSizeImage.src = placePhoto.src;
-  fullSizeImage.alt = placePhoto.alt;
-  signatureForFullSizeImage.textContent = placeName.textContent;
-  openPopup (popupOpenFullSizeImage);
-}
-
 function makeLike(event) {
   event.target.classList.toggle('place__btn-like_active');
 }
@@ -61,8 +50,19 @@ function deletePlace(event) {
   place.remove();
 }
 
-buttonOpenPopupEditProfile.addEventListener('click', (e) => {
-  e.preventDefault();
+function handleOpenPopupFullSizeImage (event) {
+  event.preventDefault();
+  const place = event.target.closest('.place');
+  const placePhoto = place.querySelector('.place__photo');
+  const placeName = place.querySelector('.place__name');
+  fullSizeImage.src = placePhoto.src;
+  fullSizeImage.alt = placePhoto.alt;
+  signatureForFullSizeImage.textContent = placeName.textContent;
+  openPopup (popupOpenFullSizeImage);
+}
+
+function handleOpenPopupEditProfile(event) {
+  event.preventDefault();
   openPopup(popupEditProfile);
 
   formEditProfileName.value = profileName.textContent;
@@ -70,24 +70,22 @@ buttonOpenPopupEditProfile.addEventListener('click', (e) => {
 
   // функция из пакета validate.js (обрабатывает валидацию полей и сабмита при открытии попапа)
   resetValidation(popupEditProfile, config);
-});
+}
 
-formEditProfile.addEventListener('submit', saveProfileInfo);
-
-buttonOpenPopupAddNewPlace.addEventListener('click', (e) => {
-  e.preventDefault();
+function handleOpenPopupAddNewPlace(event) {
+  event.preventDefault();
   openPopup(popupAddNewPlace);
 
   // функция из пакета validate.js (обрабатывает валидацию полей и сабмита при открытии попапа)
   resetValidation(popupAddNewPlace, config);
-});
+}
 
-formAddNewPlace.addEventListener('submit', (event) => {
+function handleSubmitFormAddNewPlace (event) {
   event.preventDefault();
   addPlaceCard(formAddNewPlaceName.value, formAddNewPlaceImageSrc.value);
   closePopup(popupAddNewPlace);
   formAddNewPlace.reset();
-});
+}
 
 function handlePopupClose (event) {
   const target = event.target;
@@ -105,9 +103,16 @@ function handlePopupClose (event) {
 
 document.addEventListener('click', handlePopupClose);
 document.addEventListener('keydown', handlePopupClose);
-buttonClosePopupOpenFullSizeImage.addEventListener('click', handlePopupClose);
-buttonClosePopupAddNewPlace.addEventListener('click', handlePopupClose);
+
+formEditProfile.addEventListener('submit', saveProfileInfo);
+formAddNewPlace.addEventListener('submit', handleSubmitFormAddNewPlace);
+
 buttonClosePopupEditProfile.addEventListener('click', handlePopupClose);
+buttonClosePopupAddNewPlace.addEventListener('click', handlePopupClose);
+buttonClosePopupOpenFullSizeImage.addEventListener('click', handlePopupClose);
+
+buttonOpenPopupAddNewPlace.addEventListener('click', handleOpenPopupAddNewPlace);
+buttonOpenPopupEditProfile.addEventListener('click', handleOpenPopupEditProfile);
 
 function createPlaceCard(name, imgSrc) {
 
@@ -126,7 +131,7 @@ function createPlaceCard(name, imgSrc) {
 
   buttonLike.addEventListener('click', makeLike);
   buttonDelete.addEventListener('click', deletePlace);
-  buttonOpenImage.addEventListener('click', openPopupFullSizeImage);
+  buttonOpenImage.addEventListener('click', handleOpenPopupFullSizeImage);
 
   return placeCard;
 }
