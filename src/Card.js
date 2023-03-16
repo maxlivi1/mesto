@@ -1,23 +1,24 @@
 import { openPopup } from './index.js';
 
 class Card {
-  constructor(data, cssOptions) {
+  constructor(data, templateSelector, options) {
     this._name = data.name;
     this._link = data.link;
-    this._cssOptions = cssOptions;
+    this._templateSelector = templateSelector;
+    this._options = options;
   }
 
   _getTemplate() {
     const cardElement = document
-    .querySelector(this._cssOptions.templateSelector)
-    .content.querySelector(this._cssOptions.cardSelector)
+    .querySelector(this._templateSelector)
+    .content.querySelector(this._options.cardSelector)
     .cloneNode(true);
 
     return cardElement;
   }
 
   _makeLike(event) {
-    event.target.classList.toggle(this._cssOptions.buttonLikeActiveClass);
+    event.target.classList.toggle(this._options.buttonLikeActiveClass);
   }
 
   _removeCard() {
@@ -25,9 +26,9 @@ class Card {
   }
 
   _getFilledPopupFullSizeImage() {
-    const popup = document.querySelector(this._cssOptions.popupSelector);
-    const popupImage = popup.querySelector(this._cssOptions.popupImageSelector);
-    const popupSignature = popup.querySelector(this._cssOptions.popupSignatureSelector);
+    const popup = document.querySelector(this._options.popupSelector);
+    const popupImage = popup.querySelector(this._options.popupImageSelector);
+    const popupSignature = popup.querySelector(this._options.popupSignatureSelector);
 
     popupImage.src = this._link;
     popupImage.alt = `Фото ${this._name}`;
@@ -37,45 +38,43 @@ class Card {
   }
 
   _setEventListeners() {
-    this._element.querySelector(this._cssOptions.buttonLikeSelector).addEventListener('click', (event) => {
+    this._element.querySelector(this._options.buttonLikeSelector).addEventListener('click', (event) => {
       this._makeLike(event);
     });
-    this._element.querySelector(this._cssOptions.buttonDeleteSelector).addEventListener('click', () => {
+    this._element.querySelector(this._options.buttonDeleteSelector).addEventListener('click', () => {
       this._removeCard();
     });
-    this._element.querySelector(this._cssOptions.cardImageSelector).addEventListener('click', (event) => {
+    this._element.querySelector(this._options.cardImageSelector).addEventListener('click', (event) => {
       event.preventDefault();
       openPopup(this._getFilledPopupFullSizeImage());
     });
   }
 
-  _createCard() {
+  createCard() {
     this._element = this._getTemplate();
 
-    this._element.querySelector(this._cssOptions.cardNameSelector).textContent = this._name;
-    this._element.querySelector(this._cssOptions.cardImageSelector).src = this._link;
-    this._element.querySelector(this._cssOptions.cardImageSelector).alt = `Фото ${this._name}`;
+    this._element.querySelector(this._options.cardNameSelector).textContent = this._name;
+    this._element.querySelector(this._options.cardImageSelector).src = this._link;
+    this._element.querySelector(this._options.cardImageSelector).alt = `Фото ${this._name}`;
 
     this._setEventListeners();
 
     return this._element;
   }
-
-  prependCard() {
-    document.querySelector(this._cssOptions.cardContainerSelector).prepend(this._createCard());
-    return this._element;
-  }
 }
 
-function fillCardGallery(dataCards, dataCssOptions) {
+function fillCardGallery(dataCards, templateSelector, dataOptions) {
+
+  const container = document.querySelector(dataOptions.cardContainerSelector);
+  container.innerHTML = '';
+
   dataCards.forEach(dataCard => {
-    const card = new Card(dataCard, dataCssOptions);
-    card.prependCard();
+    const card = new Card(dataCard, templateSelector, dataOptions);
+    container.prepend(card.createCard());
   });
 };
 
 const cardCssOptions = {
-  templateSelector: '#place-card',
   cardSelector: '.place',
   cardNameSelector: '.place__name',
   cardImageSelector: '.place__photo',
