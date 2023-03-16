@@ -33,7 +33,7 @@ function handleClosePopupWithEscape(event) {
   }
 }
 
-function openPopup (popup) {
+ export function openPopup (popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', handleClosePopupWithEscape);
 }

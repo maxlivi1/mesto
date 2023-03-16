@@ -1,3 +1,5 @@
+import { openPopup } from './index.js';
+
 class Card {
   constructor(data, cssOptions) {
     this._name = data.name;
@@ -22,11 +24,7 @@ class Card {
     this._element.remove();
   }
 
-  _openPopupFullSizeImage() {
-    document.querySelector(this._cssOptions.popupSelector).classList.add(this._cssOptions.popupActiveClass);
-  }
-
-  _fillPopupFullSizeImage() {
+  _getFilledPopupFullSizeImage() {
     const popup = document.querySelector(this._cssOptions.popupSelector);
     const popupImage = popup.querySelector(this._cssOptions.popupImageSelector);
     const popupSignature = popup.querySelector(this._cssOptions.popupSignatureSelector);
@@ -34,6 +32,8 @@ class Card {
     popupImage.src = this._link;
     popupImage.alt = `Фото ${this._name}`;
     popupSignature.textContent = this._name;
+
+    return popup;
   }
 
   _setEventListeners() {
@@ -43,9 +43,9 @@ class Card {
     this._element.querySelector(this._cssOptions.buttonDeleteSelector).addEventListener('click', () => {
       this._removeCard();
     });
-    this._element.querySelector(this._cssOptions.cardImageSelector).addEventListener('click', () => {
-      this._fillPopupFullSizeImage();
-      this._openPopupFullSizeImage();
+    this._element.querySelector(this._cssOptions.cardImageSelector).addEventListener('click', (event) => {
+      event.preventDefault();
+      openPopup(this._getFilledPopupFullSizeImage());
     });
   }
 
@@ -87,7 +87,6 @@ const cardCssOptions = {
   popupSelector: '.popup_place_image',
   popupImageSelector: '.popup__image',
   popupSignatureSelector: '.popup__signature',
-  popupActiveClass: 'popup_opened',
 };
 
 export { Card, fillCardGallery, cardCssOptions };
