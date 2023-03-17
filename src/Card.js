@@ -74,7 +74,7 @@ function fillCardGallery(dataCards, templateSelector, dataOptions) {
   });
 };
 
-const cardCssOptions = {
+const cssOptions = {
   cardSelector: '.place',
   cardNameSelector: '.place__name',
   cardImageSelector: '.place__photo',
@@ -88,4 +88,4 @@ const cardCssOptions = {
   popupSignatureSelector: '.popup__signature',
 };
 
-export { Card, fillCardGallery, cardCssOptions };
+export { Card, fillCardGallery, cssOptions as cardCssOptions };

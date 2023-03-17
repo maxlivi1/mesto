@@ -1,5 +1,6 @@
-import { Card, fillCardGallery, cardCssOptions } from './Card.js';
 import { initialCards } from './constants.js';
+import { Card, fillCardGallery, cardCssOptions } from './Card.js';
+import { FormValidator, validatorConfig } from './FormValidator.js';
 
 const profileName = document.querySelector('#profile-name');
 const profileInfo = document.querySelector('#profile-info');
@@ -41,8 +42,7 @@ function openPopupEditProfile() {
   formEditProfileName.value = profileName.textContent;
   formEditProfileInfo.value = profileInfo.textContent;
 
-  // функция из пакета validate.js (обрабатывает валидацию полей и сабмита при открытии попапа)
-  resetValidation(popupEditProfile, config);
+  new FormValidator(validatorConfig,formEditProfile).enableValidation();
 }
 
 function openPopupAddNewPlace() {
@@ -50,8 +50,17 @@ function openPopupAddNewPlace() {
 
   formAddNewPlace.reset();
 
-  // функция из пакета validate.js (обрабатывает валидацию полей и сабмита при открытии попапа)
-  resetValidation(popupAddNewPlace, config);
+  new FormValidator(validatorConfig,formAddNewPlace).enableValidation();
+}
+
+function addPlaceCard() {
+  const card = new Card({
+    name: formAddNewPlaceName.value,
+    link: formAddNewPlaceImageSrc.value,
+  }, '#place-card', cardCssOptions);
+
+  const container = document.querySelector(cardCssOptions.cardContainerSelector);
+  container.prepend(card.createCard());
 }
 
 function handleOpenPopupEditProfile(event) {
@@ -73,7 +82,7 @@ function handleSubmitFormSaveProfileInfo(event) {
 
 function handleSubmitFormAddNewPlace (event) {
   event.preventDefault();
-  addPlaceCard(formAddNewPlaceName.value, formAddNewPlaceImageSrc.value);
+  addPlaceCard();
   closePopup(popupAddNewPlace);
   formAddNewPlace.reset();
 }
