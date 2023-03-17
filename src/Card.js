@@ -1,11 +1,10 @@
-import { openPopup } from './index.js';
-
 class Card {
-  constructor(data, templateSelector, options) {
+  constructor(data, templateSelector, options, openImage) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
     this._options = options;
+    this._openImage = openImage;
   }
 
   _getTemplate() {
@@ -15,14 +14,6 @@ class Card {
     .cloneNode(true);
 
     return cardElement;
-  }
-
-  _makeLike(event) {
-    event.target.classList.toggle(this._options.buttonLikeActiveClass);
-  }
-
-  _removeCard() {
-    this._element.remove();
   }
 
   _getFilledPopupFullSizeImage() {
@@ -37,17 +28,29 @@ class Card {
     return popup;
   }
 
+  _makeLike = (event) => {
+    event.target.classList.toggle(this._options.buttonLikeActiveClass);
+  }
+
+  _removeCard = (event) => {
+    event.preventDefault();
+    this._element.remove();
+  }
+
+  _handleRemoveCard = (event) => {
+    event.preventDefault();
+    this._removeCard();
+  }
+
+  _handleOpenFullSizeImage = (event) => {
+    event.preventDefault();
+    this._openImage(this._getFilledPopupFullSizeImage());
+  }
+
   _setEventListeners() {
-    this._element.querySelector(this._options.buttonLikeSelector).addEventListener('click', (event) => {
-      this._makeLike(event);
-    });
-    this._element.querySelector(this._options.buttonDeleteSelector).addEventListener('click', () => {
-      this._removeCard();
-    });
-    this._element.querySelector(this._options.cardImageSelector).addEventListener('click', (event) => {
-      event.preventDefault();
-      openPopup(this._getFilledPopupFullSizeImage());
-    });
+    this._element.querySelector(this._options.buttonLikeSelector).addEventListener('click', this._makeLike);
+    this._element.querySelector(this._options.buttonDeleteSelector).addEventListener('click', this._removeCard);
+    this._element.querySelector(this._options.cardImageSelector).addEventListener('click', this._handleOpenFullSizeImage);
   }
 
   createCard() {
@@ -63,13 +66,13 @@ class Card {
   }
 }
 
-function fillCardGallery(dataCards, templateSelector, dataOptions) {
+function fillCardGallery(dataCards, templateSelector, dataOptions, openImageFunction) {
 
   const container = document.querySelector(dataOptions.cardContainerSelector);
   container.innerHTML = '';
 
   dataCards.forEach(dataCard => {
-    const card = new Card(dataCard, templateSelector, dataOptions);
+    const card = new Card(dataCard, templateSelector, dataOptions, openImageFunction);
     container.prepend(card.createCard());
   });
 };

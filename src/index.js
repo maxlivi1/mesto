@@ -26,7 +26,7 @@ function handleClosePopupWithEscape(event) {
   }
 }
 
- export function openPopup (popup) {
+function openPopup (popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', handleClosePopupWithEscape);
 }
@@ -106,4 +106,4 @@ formAddNewPlace.addEventListener('submit', handleSubmitFormAddNewPlace);
 buttonOpenPopupAddNewPlace.addEventListener('click', handleOpenPopupAddNewPlace);
 buttonOpenPopupEditProfile.addEventListener('click', handleOpenPopupEditProfile);
 
-fillCardGallery(initialCards, '#place-card', cardCssOptions);
+fillCardGallery(initialCards, '#place-card', cardCssOptions, openPopup);
