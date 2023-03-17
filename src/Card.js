@@ -1,4 +1,6 @@
-class Card {
+import { getImagePopup } from './imagePopup.js';
+
+export class Card {
   constructor(data, templateSelector, options, openImage) {
     this._name = data.name;
     this._link = data.link;
@@ -16,35 +18,17 @@ class Card {
     return cardElement;
   }
 
-  _getFilledPopupFullSizeImage() {
-    const popup = document.querySelector(this._options.popupSelector);
-    const popupImage = popup.querySelector(this._options.popupImageSelector);
-    const popupSignature = popup.querySelector(this._options.popupSignatureSelector);
-
-    popupImage.src = this._link;
-    popupImage.alt = `Фото ${this._name}`;
-    popupSignature.textContent = this._name;
-
-    return popup;
-  }
-
   _makeLike = (event) => {
     event.target.classList.toggle(this._options.buttonLikeActiveClass);
   }
 
-  _removeCard = (event) => {
-    event.preventDefault();
+  _removeCard = () => {
     this._element.remove();
-  }
-
-  _handleRemoveCard = (event) => {
-    event.preventDefault();
-    this._removeCard();
   }
 
   _handleOpenFullSizeImage = (event) => {
     event.preventDefault();
-    this._openImage(this._getFilledPopupFullSizeImage());
+    this._openImage(getImagePopup(this._link, this._name));
   }
 
   _setEventListeners() {
@@ -65,30 +49,3 @@ class Card {
     return this._element;
   }
 }
-
-function fillCardGallery(dataCards, templateSelector, dataOptions, openImageFunction) {
-
-  const container = document.querySelector(dataOptions.cardContainerSelector);
-  container.innerHTML = '';
-
-  dataCards.forEach(dataCard => {
-    const card = new Card(dataCard, templateSelector, dataOptions, openImageFunction);
-    container.prepend(card.createCard());
-  });
-};
-
-const cssOptions = {
-  cardSelector: '.place',
-  cardNameSelector: '.place__name',
-  cardImageSelector: '.place__photo',
-  cardContainerSelector: '.places',
-  buttonDeleteSelector: '.place__btn-delete',
-  buttonLikeSelector: '.place__btn-like',
-  buttonLikeActiveClass: 'place__btn-like_active',
-
-  popupSelector: '.popup_place_image',
-  popupImageSelector: '.popup__image',
-  popupSignatureSelector: '.popup__signature',
-};
-
-export { Card, fillCardGallery, cssOptions as cardCssOptions };

@@ -1,6 +1,6 @@
-import { initialCards } from './constants.js';
-import { Card, fillCardGallery, cardCssOptions } from './Card.js';
-import { FormValidator, validatorConfig } from './FormValidator.js';
+import { initialCards, cardCssOptions, validatorConfig } from './constants.js';
+import { Card } from './Card.js';
+import { FormValidator } from './FormValidator.js';
 
 const profileName = document.querySelector('#profile-name');
 const profileInfo = document.querySelector('#profile-info');
@@ -19,6 +19,12 @@ const formAddNewPlaceImageSrc = formAddNewPlace.querySelector('#add-form-link');
 
 const buttonOpenPopupEditProfile = document.querySelector('#button_open-form');
 const buttonOpenPopupAddNewPlace = document.querySelector('#add-place-btn');
+
+const formEditProfileValidator = new FormValidator(validatorConfig, formEditProfile);
+formEditProfileValidator.enableValidation();
+const formAddNewPlaceValidator = new FormValidator(validatorConfig, formAddNewPlace);
+formAddNewPlaceValidator.enableValidation();
+
 
 function handleClosePopupWithEscape(event) {
   if (event.key === 'Escape') {
@@ -42,7 +48,7 @@ function openPopupEditProfile() {
   formEditProfileName.value = profileName.textContent;
   formEditProfileInfo.value = profileInfo.textContent;
 
-  new FormValidator(validatorConfig,formEditProfile).enableValidation();
+  formEditProfileValidator.resetValidation();
 }
 
 function openPopupAddNewPlace() {
@@ -50,14 +56,14 @@ function openPopupAddNewPlace() {
 
   formAddNewPlace.reset();
 
-  new FormValidator(validatorConfig,formAddNewPlace).enableValidation();
+  formAddNewPlaceValidator.resetValidation();
 }
 
 function addPlaceCard() {
   const card = new Card({
     name: formAddNewPlaceName.value,
     link: formAddNewPlaceImageSrc.value,
-  }, '#place-card', cardCssOptions);
+  }, '#place-card', cardCssOptions, openPopup);
 
   const container = document.querySelector(cardCssOptions.cardContainerSelector);
   container.prepend(card.createCard());
@@ -105,5 +111,16 @@ formAddNewPlace.addEventListener('submit', handleSubmitFormAddNewPlace);
 
 buttonOpenPopupAddNewPlace.addEventListener('click', handleOpenPopupAddNewPlace);
 buttonOpenPopupEditProfile.addEventListener('click', handleOpenPopupEditProfile);
+
+function fillCardGallery(dataCards, templateSelector, dataOptions, openImageFunction) {
+
+  const container = document.querySelector(dataOptions.cardContainerSelector);
+  container.innerHTML = '';
+
+  dataCards.forEach(dataCard => {
+    const card = new Card(dataCard, templateSelector, dataOptions, openImageFunction);
+    container.prepend(card.createCard());
+  });
+};
 
 fillCardGallery(initialCards, '#place-card', cardCssOptions, openPopup);

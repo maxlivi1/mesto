@@ -1,4 +1,4 @@
-class FormValidator {
+export class FormValidator {
   constructor (config, form) {
     this._config = config;
     this._form = form;
@@ -48,11 +48,6 @@ class FormValidator {
     }
   }
 
-  _resetValidation() {
-    this._inputList.forEach(element => this._hideInputError(element));
-    this._toggleSubmitState();
-  }
-
   _setEventListeners() {
     this._inputList.forEach((input) => {
       input.addEventListener('input', () => {
@@ -62,18 +57,12 @@ class FormValidator {
     });
   }
 
+  resetValidation() {
+    this._inputList.forEach(element => this._hideInputError(element));
+    this._toggleSubmitState();
+  }
+
   enableValidation() {
-    this._resetValidation();
     this._setEventListeners();
   }
 }
-
-const config = {
-  inputSelector: '.popup__input',
-  inactiveButtonClass: 'popup__btn-save_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_visible',
-  inputErrorPostfix: '-error',
-};
-
-export { FormValidator, config as validatorConfig };
