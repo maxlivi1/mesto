@@ -2,6 +2,8 @@ import { initialCards, cardCssOptions, validatorConfig } from './constants.js';
 import { Card } from './Card.js';
 import { FormValidator } from './FormValidator.js';
 
+const places = document.querySelector('.places');
+
 const profileName = document.querySelector('#profile-name');
 const profileInfo = document.querySelector('#profile-info');
 
@@ -59,14 +61,15 @@ function openPopupAddNewPlace() {
   formAddNewPlaceValidator.resetValidation();
 }
 
+function generatePlaceCard(dataCard, templateSelector, dataOptions, openImageFunction) {
+  return new Card(dataCard, templateSelector, dataOptions, openImageFunction).createCard();
+}
+
 function addPlaceCard() {
-  const card = new Card({
+  places.prepend(generatePlaceCard({
     name: formAddNewPlaceName.value,
     link: formAddNewPlaceImageSrc.value,
-  }, '#place-card', cardCssOptions, openPopup);
-
-  const container = document.querySelector(cardCssOptions.cardContainerSelector);
-  container.prepend(card.createCard());
+  }, '#place-card', cardCssOptions, openPopup));
 }
 
 function handleOpenPopupEditProfile(event) {
@@ -112,15 +115,11 @@ formAddNewPlace.addEventListener('submit', handleSubmitFormAddNewPlace);
 buttonOpenPopupAddNewPlace.addEventListener('click', handleOpenPopupAddNewPlace);
 buttonOpenPopupEditProfile.addEventListener('click', handleOpenPopupEditProfile);
 
-function fillCardGallery(dataCards, templateSelector, dataOptions, openImageFunction) {
-
-  const container = document.querySelector(dataOptions.cardContainerSelector);
+function fillCardGallery(dataCards, templateSelector, container, dataOptions, openImageFunction) {
   container.innerHTML = '';
-
   dataCards.forEach(dataCard => {
-    const card = new Card(dataCard, templateSelector, dataOptions, openImageFunction);
-    container.prepend(card.createCard());
+    container.prepend(generatePlaceCard(dataCard, templateSelector, dataOptions, openImageFunction));
   });
 };
 
-fillCardGallery(initialCards, '#place-card', cardCssOptions, openPopup);
+fillCardGallery(initialCards, '#place-card', places, cardCssOptions, openPopup);
