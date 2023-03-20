@@ -10,12 +10,11 @@ export class Card {
   }
 
   _getTemplate() {
-    const cardElement = document
+    return document
     .querySelector(this._templateSelector)
-    .content.querySelector(this._options.cardSelector)
+    .content
+    .children[0]
     .cloneNode(true);
-
-    return cardElement;
   }
 
   _makeLike = (event) => {

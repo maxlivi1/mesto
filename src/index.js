@@ -123,3 +123,4 @@ function fillCardGallery(dataCards, templateSelector, container, dataOptions, op
 };
 
 fillCardGallery(initialCards, '#place-card', places, cardCssOptions, openPopup);
+

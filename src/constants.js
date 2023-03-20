@@ -26,10 +26,8 @@ const initialCards = [
   ];
 
   const cardCssOptions = {
-    cardSelector: '.place',
     cardNameSelector: '.place__name',
     cardImageSelector: '.place__photo',
-    // cardContainerSelector: '.places',
     buttonDeleteSelector: '.place__btn-delete',
     buttonLikeSelector: '.place__btn-like',
     buttonLikeActiveClass: 'place__btn-like_active',
