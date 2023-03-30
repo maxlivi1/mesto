@@ -8,6 +8,7 @@ export default class PopupWithImage extends Popup {
   }
 
   open = () => {
+    super.open();
     const popupImage = this.getPopup.querySelector('.popup__image');
     const popupSignature = this.getPopup.querySelector('.popup__signature');
     popupImage.src = this._image;
