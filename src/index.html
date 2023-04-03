@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages/index.css">
   <title>Место</title>
 </head>
 <body class="container">
@@ -14,7 +13,7 @@
     </header>
     <main class="content">
       <section class="profile">
-        <img class="profile__avatar" src="./images/avatar.png" alt="Аватарка">
+        <img class="profile__avatar" src="<%=require('./images/avatar.png')%>" alt="Аватарка">
         <div class="profile__info">
           <h1 id="profile-name" class="profile__user-name">Жак-Ив Кусто</h1>
           <button type="button" id="button_open-form" class="button profile__btn-edit" aria-label="Редактировать"></button>
@@ -79,6 +78,5 @@
       <button type="button" class="button place__btn-delete" aria-label="Удалить"></button>
     </article>
   </template>
-  <script type="module" src="./pages/index.js"></script>
 </body>
 </html>
