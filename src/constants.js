@@ -1,4 +1,4 @@
-const initialCards = [
+export const initialCards = [
   {
     name: 'Архыз',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -25,7 +25,7 @@ const initialCards = [
   }
   ];
 
-  const cardCssOptions = {
+  export const cardCssOptions = {
     cardNameSelector: '.place__name',
     cardImageSelector: '.place__photo',
     buttonDeleteSelector: '.place__btn-delete',
@@ -33,7 +33,7 @@ const initialCards = [
     buttonLikeActiveClass: 'place__btn-like_active',
   };
 
-  const validatorConfig = {
+  export const validatorConfig = {
     inputSelector: '.popup__input',
     inactiveButtonClass: 'popup__btn-save_disabled',
     inputErrorClass: 'popup__input_type_error',
@@ -41,4 +41,6 @@ const initialCards = [
     inputErrorPostfix: '-error',
   };
 
-  export { initialCards, cardCssOptions, validatorConfig };
+  export const buttonOpenPopupEditProfile = document.querySelector('#button_open-form');
+  export const buttonOpenPopupAddNewPlace = document.querySelector('#add-place-btn');
+
