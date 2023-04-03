@@ -4,22 +4,18 @@ import {
   validatorConfig,
   buttonOpenPopupEditProfile,
   buttonOpenPopupAddNewPlace,
-} from './constants.js';
-import Section from './Section.js';
-import Card from './Card.js';
-import PopupWithImage from './PopupWithImage.js';
-import PopupWithForm from './PopupWithForm.js';
-import UserInfo from './UserInfo.js';
-import FormValidator from './FormValidator.js';
+} from '../utils/constants.js';
+import Section from '../components/Section.js';
+import Card from '../components/Card.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
+import FormValidator from '../components/FormValidator.js';
 
 const userInfo = new UserInfo({
   userNameSelector: '#profile-name',
   userInfoSelector: '#profile-info',
 });
-
-function generatePlaceCard(dataCard, handle, templateSelector, dataOptions) {
-  return new Card({data: dataCard, handleCardClick: handle}, templateSelector, dataOptions).createCard();
-}
 
 function handleCardClick({ imageSrc, signatureText }) {
   const popup = new PopupWithImage('#popup-image', imageSrc, signatureText);
