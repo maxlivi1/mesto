@@ -3,8 +3,8 @@
   font-style:  normal;
   font-weight: 400;
   font-display: swap;
-  src: url(./Inter-Regular.woff2) format("woff2"),
-       url(./Inter-Regular.woff) format("woff");
+  src: url(./inter-400-regular.woff2) format("woff2"),
+       url(./inter-400-regular.woff) format("woff");
 }
 
 @font-face {
@@ -12,8 +12,8 @@
   font-style:  normal;
   font-weight: 500;
   font-display: swap;
-  src: url(./Inter-Medium.woff2) format("woff2"),
-       url(./Inter-Medium.woff) format("woff");
+  src: url(./inter-500-medium.woff2) format("woff2"),
+       url(./inter-500-medium.woff) format("woff");
 }
 
 @font-face {
@@ -21,6 +21,6 @@
   font-style:  normal;
   font-weight: 900;
   font-display: swap;
-  src: url(./Inter-Black.woff2) format("woff2"),
-       url(./Inter-Black.woff) format("woff");
+  src: url(./inter-900-black.woff2) format("woff2"),
+       url(./inter-900-black.woff) format("woff");
 }
