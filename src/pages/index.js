@@ -18,30 +18,31 @@ const userInfo = new UserInfo({
   userInfoSelector: '#profile-info',
 });
 
+const popupImage = new PopupWithImage('#popup-image');
+popupImage.setEventListeners();
+
 function handleCardClick({ imageSrc, signatureText }) {
-  const popup = new PopupWithImage('#popup-image', imageSrc, signatureText);
-  popup.setEventListeners();
-  popup.open();
+  popupImage.open({ imageSrc, signatureText });
 }
 
-const cardsSectionRerderer = new Section({
-  items: initialCards,
-  renderer: () => {}
+function generateCard(dataCard,handleCard, selector, options) {
+  return new Card({ data: dataCard, handleCardClick: handleCard }, selector, options).createCard();
+}
+
+const cardsSectionRenderer = new Section({
+  renderer: (item) => {
+    cardsSectionRenderer.addItem(generateCard(item, handleCardClick, '#place-card', cardCssOptions));
+  }
 }, '.places');
 
-function cardRenderer(item) {
-  const card = new Card({ data: item, handleCardClick }, '#place-card', cardCssOptions).createCard();
-  cardsSectionRerderer.addItem(card);
-}
-
-cardsSectionRerderer.setRenderer(cardRenderer);
-
 function handleSubmitAddPlace(inputsData) {
-  cardsSectionRerderer.addItem((new Card({ data:
-    {
-    name: inputsData['add-form__name'],
-    link: inputsData['add-form__link'],
-    }, handleCardClick }, '#place-card', cardCssOptions).createCard()));
+  cardsSectionRenderer.addItem(
+    generateCard(
+      {
+        name: inputsData['add-form__name'],
+        link: inputsData['add-form__link'],
+      },
+      handleCardClick, '#place-card', cardCssOptions));
 }
 
 const popupPlace = new PopupWithForm('#popup-add', handleSubmitAddPlace);
@@ -73,12 +74,17 @@ formEditProfileValidator.enableValidation();
 
 function handleOpenPopupProfile(event) {
   event.preventDefault();
-  popupEdit.getForm().elements['edit-form__name'].value = userInfo.getUserInfo().name;
-  popupEdit.getForm().elements['edit-form__information'].value = userInfo.getUserInfo().info;
+
+  const { name, info } = userInfo.getUserInfo();
+  const formElements = popupEdit.getForm().elements;
+
+  formElements['edit-form__name'].value = name;
+  formElements['edit-form__information'].value = info;
+
   formEditProfileValidator.resetValidation();
   popupEdit.open();
 }
 
 buttonOpenPopupEditProfile.addEventListener('click', handleOpenPopupProfile);
 
-cardsSectionRerderer.rendereItems();
+cardsSectionRenderer.rendereItems({ items: initialCards });

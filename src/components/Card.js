@@ -1,4 +1,5 @@
 export default class Card {
+
   constructor({ data, handleCardClick }, templateSelector, options) {
     this._name = data.name;
     this._link = data.link;
@@ -15,31 +16,37 @@ export default class Card {
     .cloneNode(true);
   }
 
-  _makeLike = (event) => {
-    event.target.classList.toggle(this._options.buttonLikeActiveClass);
+  _makeLike = () => {
+    this._buttonLikeElement.classList.toggle(this._options.buttonLikeActiveClass);
   }
 
   _removeCard = () => {
     this._element.remove();
+    this._element = null;
   }
 
   _setEventListeners() {
-    this._element.querySelector(this._options.buttonLikeSelector).addEventListener('click', this._makeLike);
-    this._element.querySelector(this._options.buttonDeleteSelector).addEventListener('click', this._removeCard);
-    this._element.querySelector(this._options.cardImageSelector).addEventListener('click', (event) => {
+    this._buttonLikeElement.addEventListener('click', this._makeLike);
+    this._buttonDeleteElement.addEventListener('click', this._removeCard);
+    this._imageElement.addEventListener('click', (event) => {
       event.preventDefault();
       this._handleCardClick({
         imageSrc: this._link,
-        signatureText: this._name });
+        signatureText: this._name
+      });
     });
   }
 
   createCard() {
     this._element = this._getTemplate();
+    this._buttonLikeElement = this._element.querySelector(this._options.buttonLikeSelector);
+    this._buttonDeleteElement = this._element.querySelector(this._options.buttonDeleteSelector);
+    this._imageElement = this._element.querySelector(this._options.cardImageSelector);
+    this._nameElement = this._element.querySelector(this._options.cardNameSelector);
 
-    this._element.querySelector(this._options.cardNameSelector).textContent = this._name;
-    this._element.querySelector(this._options.cardImageSelector).src = this._link;
-    this._element.querySelector(this._options.cardImageSelector).alt = `Фото ${this._name}`;
+    this._nameElement.textContent = this._name;
+    this._imageElement.src = this._link;
+    this._imageElement.alt = `Фото ${this._name}`;
 
     this._setEventListeners();
 
