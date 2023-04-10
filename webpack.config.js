@@ -39,6 +39,13 @@ module.exports = {
         }
       },
       {
+        test: /\.md$/,
+        type: 'asset/resource',
+        generator: {
+          filename: '[name].md'
+        }
+      },
+      {
         test: /\.css$/,
         use: [
           MiniCssExtractPlugin.loader, 

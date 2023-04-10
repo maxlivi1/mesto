@@ -1,4 +1,5 @@
 import './index.css';
+import '../../README.md';
 import {
   initialCards,
   cardCssOptions,
