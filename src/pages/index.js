@@ -1,7 +1,6 @@
 import './index.css';
 import '../../README.md';
 import {
-  initialCards,
   cardCssOptions,
   validatorConfig,
   buttonOpenPopupEditProfile,
@@ -13,6 +12,9 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import FormValidator from '../components/FormValidator.js';
+import Api from '../components/Api.js';
+
+const api = new Api({});
 
 const userInfo = new UserInfo({
   userNameSelector: '#profile-name',
@@ -88,4 +90,8 @@ function handleOpenPopupProfile(event) {
 
 buttonOpenPopupEditProfile.addEventListener('click', handleOpenPopupProfile);
 
-cardsSectionRenderer.rendereItems({ items: initialCards });
+api.getInitialCards()
+  .then(dataCards => {
+    console.log(dataCards);
+    cardsSectionRenderer.rendereItems({ items: dataCards });
+})
