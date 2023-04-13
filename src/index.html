@@ -13,18 +13,21 @@
     </header>
     <main class="content">
       <section class="profile">
-        <img class="profile__avatar" src="<%=require('./images/avatar.png')%>" alt="Аватарка">
+        <div class="profile__avatar-wrapper">
+          <img class="profile__avatar" src="#" alt="Аватар">
+          <button class="button profile__btn-change"></button>
+        </div>
         <div class="profile__info">
-          <h1 id="profile-name" class="profile__user-name">Жак-Ив Кусто</h1>
+          <h1 id="profile-name" class="profile__user-name"></h1>
           <button type="button" id="button_open-form" class="button profile__btn-edit" aria-label="Редактировать"></button>
-          <p id="profile-info" class="profile__user-information">Исследователь океана</p>
+          <p id="profile-info" class="profile__user-information"></p>
         </div>
         <button type="button" id="add-place-btn" class="button button_role_add-place" aria-label="Добавить"></button>
       </section>
       <section class="places" aria-label="Места"></section>
     </main>
     <footer class="footer">
-      <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
+      <p class="footer__copyright">&copy; 2023 Mesto Russia</p>
     </footer>
     <div id="popup-edit" class="popup">
       <div class="popup__container">
@@ -52,6 +55,28 @@
             <span class="add-form-link-error popup__input-error"></span>
           </fieldset>
           <button id="btn-add" class="button popup__btn-save" type="submit">Создать</button>
+        </form>
+        <button type="button" id="form-add__btn-close" class="button popup__btn-close" aria-label="Закрыть"></button>
+      </div>
+    </div>
+    <div id="popup-change-avatar" class="popup">
+      <div class="popup__container">
+        <form name="change-avatar-form" id="change-avatar-form" class="popup__form" action="#" novalidate>
+          <h3 class="popup__title">Обновить аватар</h3>
+          <fieldset class="popup__editable-information">
+            <input type="url" name="change-avatar__link" id="change-avatar-link" class="popup__input popup__input_type_job" placeholder="Введите url адрес нового аватара" autocomplete="off" required>
+            <span class="change-avatar-link-error popup__input-error"></span>
+          </fieldset>
+          <button id="btn-add" class="button popup__btn-save" type="submit">Сохранить</button>
+        </form>
+        <button type="button" id="form-add__btn-close" class="button popup__btn-close" aria-label="Закрыть"></button>
+      </div>
+    </div>
+    <div id="popup-delete-place" class="popup">
+      <div class="popup__container">
+        <form name="delete-place-form" id="delete-place-form" class="popup__form" action="#" novalidate>
+          <h3 class="popup__title popup__title_place_popup-delete-card">Вы уверены?</h3>
+          <button id="btn-add" class="button popup__btn-save" type="submit">Да</button>
         </form>
         <button type="button" id="form-add__btn-close" class="button popup__btn-close" aria-label="Закрыть"></button>
       </div>

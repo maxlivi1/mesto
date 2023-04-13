@@ -14,4 +14,11 @@ export default class PopupWithImage extends Popup {
     this._popupSignature.textContent = signatureText;
     super.open();
   }
+
+  close() {
+    super.close();
+    this._popupImage.src = '';
+    this._popupImage.alt = '';
+    this._popupSignature.textContent = '';
+  }
 }

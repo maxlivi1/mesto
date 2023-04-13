@@ -4,6 +4,7 @@
   box-sizing: border-box;
   width: 18px;
   height: 19px;
+  display: none;
 
   position: absolute;
   top: 20px;
