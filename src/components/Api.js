@@ -128,6 +128,37 @@ export default class Api {
       console.log(`Error: ${error}`);
     })
   }
+
+  likePlace({ isLiked, placeId }) {
+    if (isLiked) {
+      return fetch(`https://mesto.nomoreparties.co/v1/cohort-64/cards/${placeId}/likes`,
+      {
+        method: 'DELETE',
+        headers: {
+          authorization: 'c6eeac48-21b1-4b11-8e1a-276b18a235ea',
+        },
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject(`Ошибка: ${response.status} : ${response.statusText}`);
+      })
+    }
+    return fetch(`https://mesto.nomoreparties.co/v1/cohort-64/cards/${placeId}/likes`,
+      {
+        method: 'PUT',
+        headers: {
+          authorization: 'c6eeac48-21b1-4b11-8e1a-276b18a235ea',
+        }
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject(`Ошибка: ${response.status} : ${response.statusText}`);
+      })
+  }
 }
 
 

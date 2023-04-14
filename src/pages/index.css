@@ -31,8 +31,10 @@
 @import url(../blocks/place/__photo/place__photo.css);
 @import url(../blocks/place/__info/place__info.css);
 @import url(../blocks/place/__name/place__name.css);
+@import url(../blocks/place/__like-wrapper/place__like-wrapper.css);
 @import url(../blocks/place/__btn-like/place__btn-like.css);
 @import url(../blocks/place/__btn-like/_active/place__btn-like_active.css);
+@import url(../blocks/place/__like-counter/place__like-counter.css);
 @import url(../blocks/place/__btn-delete/place__btn-delete.css);
 @import url(../blocks/place/__btn-delete/_active/place__btn-delete_active.css);
 @import url(../blocks/place/__photo-link/place__photo-link.css);

@@ -3,6 +3,7 @@ export const cardCssOptions = {
   cardImageSelector: '.place__photo',
   buttonDeleteSelector: '.place__btn-delete',
   buttonLikeSelector: '.place__btn-like',
+  buttonCounterLikesSelector: '.place__like-counter',
   buttonDeleteActiveClass: 'place__btn-delete_active',
   buttonLikeActiveClass: 'place__btn-like_active',
 };

@@ -1,13 +1,15 @@
 export default class Card {
 
-  constructor({ data, userId }, { handleCardClick, handleDeleteClick }, templateSelector, options) {
+  constructor({ data, userId }, { handleCardClick, handleDeleteClick, handleLikeClick }, templateSelector, options) {
     this._id = data._id;
     this._userId = userId;
     this._ownerId = data.owner._id;
     this._name = data.name;
     this._link = data.link;
-    this._handleCardClick = handleCardClick,
-    this._handleDeleteClick = handleDeleteClick,
+    this._likes = data.likes;
+    this._handleCardClick = handleCardClick;
+    this._handleDeleteClick = handleDeleteClick;
+    this._handleLikeClick = handleLikeClick;
     this._templateSelector = templateSelector;
     this._options = options;
   }
@@ -20,8 +22,28 @@ export default class Card {
     .cloneNode(true);
   }
 
-  _makeLike = () => {
-    this._buttonLikeElement.classList.toggle(this._options.buttonLikeActiveClass);
+  isLiked() {
+    let isLiked = false;
+    this._likes.forEach(user => {
+      if(user._id === this._userId) {
+        isLiked = true;
+      }
+    })
+    return isLiked;
+  }
+
+  _like = () => {
+    this._handleLikeClick(this);
+  }
+
+  setLikes(likes) {
+    this._likes = likes;
+    if (this.isLiked()) {
+      this._buttonLikeElement.classList.add(this._options.buttonLikeActiveClass);
+    } else {
+      this._buttonLikeElement.classList.remove(this._options.buttonLikeActiveClass);
+    }
+    this._counterLikesElemtnt.textContent = this._likes.length;
   }
 
   _isOwner() {
@@ -33,7 +55,7 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._buttonLikeElement.addEventListener('click', this._makeLike);
+    this._buttonLikeElement.addEventListener('click', this._like);
     if (this._isOwner()) {
       this._buttonDeleteElement.addEventListener('click', this._removeCard);
     }
@@ -68,10 +90,16 @@ export default class Card {
     }
     this._imageElement = this._element.querySelector(this._options.cardImageSelector);
     this._nameElement = this._element.querySelector(this._options.cardNameSelector);
+    this._counterLikesElemtnt = this._element.querySelector(this._options.buttonCounterLikesSelector);
 
     this._nameElement.textContent = this._name;
     this._imageElement.src = this._link;
     this._imageElement.alt = `Фото ${this._name}`;
+    this._counterLikesElemtnt.textContent = this._likes.length;
+
+    if (this.isLiked()) {
+      this._buttonLikeElement.classList.add(this._options.buttonLikeActiveClass);
+    }
 
     this._setEventListeners();
 

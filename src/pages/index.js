@@ -86,8 +86,8 @@ function handleCardClick({ imageSrc, signatureText }) {
   popupImage.open({ imageSrc, signatureText });
 }
 
-function generateCard(dataCard, userId, handleCard, handleDelete, selector, options) {
-  const card = new Card({ data: dataCard, userId }, { handleCardClick: handleCard, handleDeleteClick: handleDelete }, selector, options);
+function generateCard(dataCard, userId, handleCard, handleDelete, handleLike, selector, options) {
+  const card = new Card({ data: dataCard, userId }, { handleCardClick: handleCard, handleDeleteClick: handleDelete, handleLikeClick: handleLike }, selector, options);
   return card.createCard();
 }
 
@@ -95,10 +95,23 @@ function handleDeleteClick(deletionObject) {
   popupDeletePlace.open(deletionObject);
 }
 
+function handleLikeClick(place) {
+  api.likePlace({ isLiked: place.isLiked(), placeId: place.getId() })
+  .then((resData) => {
+    place.setLikes(resData.likes);
+  })
+  .catch(error => {
+    console.log(`Ошибка: ${error}`);
+  })
+  .finally(() => {
+    // выполнить после загрузки
+  })
+}
+
 const cardsSectionRenderer = new Section({
   renderer: (item) => {
     // console.log(item.owner._id);
-    cardsSectionRenderer.addItem(generateCard(item, user.getId(), handleCardClick, handleDeleteClick, '#place-card', cardCssOptions));
+    cardsSectionRenderer.addItem(generateCard(item, user.getId(), handleCardClick, handleDeleteClick, handleLikeClick, '#place-card', cardCssOptions));
   }
 }, '.places');
 
@@ -109,8 +122,7 @@ function handleSubmitAddPlace(inputsData) {
       imageUrl: inputsData['add-form__link']
     })
     .then(resData => {
-      cardsSectionRenderer.addItem(
-        generateCard(resData, user.getId(), handleCardClick, handleDeleteClick, '#place-card', cardCssOptions));
+      cardsSectionRenderer.addItem(generateCard(resData, user.getId(), handleCardClick, handleDeleteClick, handleLikeClick, '#place-card', cardCssOptions));
     })
     .catch(error => {
       console.log(`Ошибка: ${error}`);
