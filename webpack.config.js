@@ -66,5 +66,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'style.[contenthash].css'
     })
-  ]
+  ],
+  devtool: 'source-map'
 }
