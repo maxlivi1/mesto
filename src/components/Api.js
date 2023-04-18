@@ -3,162 +3,78 @@ export default class Api {
     this._options = options;
   }
 
-  getInitialCards() {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-64/cards',
-    {
-      headers: {
-        authorization: 'c6eeac48-21b1-4b11-8e1a-276b18a235ea'
-      }
-    })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      return Promise.reject(`Ошибка: ${response.status} : ${response.statusText}`);
-    })
-    .catch(error => {
-      console.log(`Error: ${error}`);
-    })
+  static listener = (response) => {
+    if (response.ok) {
+      return response.json();
+    }
+    return Promise.reject(`Ошибка ${response.status} : ${response.statusText}`);
   }
 
-  addNewPlace({ placeName, imageUrl }) {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-64/cards',
+  readInitialPlaces() {
+    return fetch(`${this._options.baseUrl}${this._options.requestTo.places}`,
+    { headers: this._options.headers })
+    .then(Api.listener);
+  }
+
+  createPlace({ placeName, imageUrl }) {
+    return fetch(`${this._options.baseUrl}${this._options.requestTo.places}`,
     {
       method: 'POST',
-      headers: {
-        authorization: 'c6eeac48-21b1-4b11-8e1a-276b18a235ea',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name: placeName,
-        link: imageUrl
-      })
+      headers: this._options.headers,
+      body: JSON.stringify({ name: placeName, link: imageUrl })
     })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      return Promise.reject(`Ошибка: ${response.status} : ${response.statusText}`);
-    })
-    .catch(error => {
-      console.log(`Error: ${error}`);
-    })
+    .then(Api.listener);
   }
 
-  deletePlace({ cardId }) {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-64/cards/${cardId}`,
-    {
-      method: 'DELETE',
-      headers: {
-        authorization: 'c6eeac48-21b1-4b11-8e1a-276b18a235ea',
-      },
-    })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      return Promise.reject(`Ошибка: ${response.status} : ${response.statusText}`);
-    })
-    .catch(error => {
-      console.log(`Error: ${error}`);
-    })
+  deletePlace({ placeId }) {
+    return fetch(`${this._options.baseUrl}${this._options.requestTo.places}/${placeId}`,
+    { method: 'DELETE', headers: this._options.headers })
+    .then(Api.listener);
   }
 
-  getUserData() {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-64/users/me',
-    {
-      headers: {
-        authorization: 'c6eeac48-21b1-4b11-8e1a-276b18a235ea'
-      }
-    })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      return Promise.reject(`Ошибка: ${response.status} : ${response.statusText}`);
-    })
-    .catch(error => {
-      console.log(`Error: ${error}`);
-    })
+  readUser() {
+    return fetch(`${this._options.baseUrl}${this._options.requestTo.user}`,
+    { headers: this._options.headers })
+    .then(Api.listener);
   }
 
-  changeUserInfo({ newName, newInfo }) {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-64/users/me',
+  updateUserInfo({ newName, newInfo }) {
+    return fetch(`${this._options.baseUrl}${this._options.requestTo.user}`,
     {
       method: 'PATCH',
-      headers: {
-        authorization: 'c6eeac48-21b1-4b11-8e1a-276b18a235ea',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name: newName,
-        about: newInfo
-      })
+      headers: this._options.headers,
+      body: JSON.stringify({ name: newName, about: newInfo })
     })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      return Promise.reject(`Ошибка: ${response.status} : ${response.statusText}`);
-    })
-    .catch(error => {
-      console.log(`Error: ${error}`);
-    })
+    .then(Api.listener);
   }
 
-  changeUserAvatar({ newAvatar }) {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-64/users/me/avatar',
+  updateUserAvatar({ newAvatar }) {
+    return fetch(`${this._options.baseUrl}${this._options.requestTo.userAvatar}`,
     {
       method: 'PATCH',
-      headers: {
-        authorization: 'c6eeac48-21b1-4b11-8e1a-276b18a235ea',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        avatar: newAvatar
-      })
+      headers: this._options.headers,
+      body: JSON.stringify({ avatar: newAvatar })
     })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      return Promise.reject(`Ошибка: ${response.status} : ${response.statusText}`);
-    })
-    .catch(error => {
-      console.log(`Error: ${error}`);
-    })
+    .then(Api.listener);
+  }
+
+  _createLikePlace(placeId) {
+    return fetch(`${this._options.baseUrl}${this._options.requestTo.places}/${placeId}${this._options.requestTo.likes}`,
+      { method: 'PUT', headers: this._options.headers })
+      .then(Api.listener);
+  }
+
+  _deleteLikePlace(placeId) {
+    return fetch(`${this._options.baseUrl}${this._options.requestTo.places}/${placeId}${this._options.requestTo.likes}`,
+      { method: 'DELETE', headers: this._options.headers })
+      .then(Api.listener);
   }
 
   likePlace({ isLiked, placeId }) {
     if (isLiked) {
-      return fetch(`https://mesto.nomoreparties.co/v1/cohort-64/cards/${placeId}/likes`,
-      {
-        method: 'DELETE',
-        headers: {
-          authorization: 'c6eeac48-21b1-4b11-8e1a-276b18a235ea',
-        },
-      })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`Ошибка: ${response.status} : ${response.statusText}`);
-      })
+      return this._deleteLikePlace(placeId);
+    } else {
+      return this._createLikePlace(placeId);
     }
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-64/cards/${placeId}/likes`,
-      {
-        method: 'PUT',
-        headers: {
-          authorization: 'c6eeac48-21b1-4b11-8e1a-276b18a235ea',
-        }
-      })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`Ошибка: ${response.status} : ${response.statusText}`);
-      })
   }
 }
-
-

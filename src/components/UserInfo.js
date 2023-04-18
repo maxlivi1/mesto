@@ -43,6 +43,12 @@ export default class UserInfo {
     })
   }
 
+  renderUserInfo() {
+    this._userNameElement.textContent = this._name;
+    this._userAboutElement.textContent = this._about;
+    this._userAvatarElement.src = this._avatar;
+  }
+
   setUserInfo({ newName, newInfo }) {
     this._name = newName;
     this._about = newInfo;

@@ -5,6 +5,7 @@ import {
   validatorConfig,
   buttonOpenPopupEditProfile,
   buttonOpenPopupAddNewPlace,
+  apiOptions
 } from '../utils/constants.js';
 import Section from '../components/Section.js';
 import Card from '../components/Card.js';
@@ -15,69 +16,37 @@ import UserInfo from '../components/UserInfo.js';
 import FormValidator from '../components/FormValidator.js';
 import Api from '../components/Api.js';
 
-const api = new Api({});
+const api = new Api(apiOptions);
 let user = null;
 
 const popupDeletePlace = new PopupConsentToDeletion('#popup-delete-place', () => {
   const deletionObject = popupDeletePlace.getDeletionObject();
-  // выполнить до загрузки
-  api.deletePlace({ cardId: deletionObject.id })
+  api.deletePlace({ placeId: deletionObject.id })
   .then(() => {
     deletionObject.element.remove();
   })
   .catch(error => {
-    console.log(`Ошибка: ${error}`);
-  })
-  .finally(() => {
-    // выполнить после загрузки
+    console.log(`Что-то пошло не так: ${error}`);
   })
 });
 popupDeletePlace.setEventListeners();
 
 const popupChangeAvatar = new PopupWithForm('#popup-change-avatar', (inputData => {
-  // выполнить до загрузки
-  api.changeUserAvatar({ newAvatar: inputData['change-avatar__link'] })
+  popupChangeAvatar.switchDownload('Сохранение...');
+  api.updateUserAvatar({ newAvatar: inputData['change-avatar__link'] })
   .then(userData => {
     user.setUserAvatar({ newAvatar: userData.avatar });
   })
   .catch(error => {
-    console.log(`Ошибка: ${error}`);
+    console.log(`Что-то пошло не так: ${error}`);
   })
   .finally(() => {
-    // выполнить после загрузки
+    popupChangeAvatar.switchDownload('Сохранить');
   })
 }));
 popupChangeAvatar.setEventListeners();
 const formChangeAvatarValidator = new FormValidator(validatorConfig, popupChangeAvatar.getForm());
 formChangeAvatarValidator.enableValidation();
-
-// выполнить до загрузки
-api.getUserData()
-  .then(userData => {
-    user = new UserInfo({
-      userAvatarSelector: '.profile__avatar',
-      userNameSelector: '#profile-name',
-      userInfoSelector: '#profile-info',
-    }, { id: userData._id, name: userData.name, about: userData.about, avatar: userData.avatar },
-    () => {
-      formChangeAvatarValidator.resetValidation();
-      popupChangeAvatar.open();
-    });
-    user.setListeners();
-    user.setUserInfo(
-      {
-        newName: user.getUserInfo().name,
-        newInfo: user.getUserInfo().about
-      })
-    user.setUserAvatar({ newAvatar: user.getUserInfo().avatar });
-    // console.log('UserId: ', user.getId());
-  })
-  .catch(error => {
-    console.log(`Ошибка: ${error}`);
-  })
-  .finally(() => {
-    // выполнить после загрузки
-  })
 
 const popupImage = new PopupWithImage('#popup-image');
 popupImage.setEventListeners();
@@ -87,7 +56,10 @@ function handleCardClick({ imageSrc, signatureText }) {
 }
 
 function generateCard(dataCard, userId, handleCard, handleDelete, handleLike, selector, options) {
-  const card = new Card({ data: dataCard, userId }, { handleCardClick: handleCard, handleDeleteClick: handleDelete, handleLikeClick: handleLike }, selector, options);
+  const card = new Card(
+    { data: dataCard, userId },
+    { handleCardClick: handleCard, handleDeleteClick: handleDelete, handleLikeClick: handleLike },
+    selector, options);
   return card.createCard();
 }
 
@@ -101,23 +73,21 @@ function handleLikeClick(place) {
     place.setLikes(resData.likes);
   })
   .catch(error => {
-    console.log(`Ошибка: ${error}`);
+    console.log(`Что-то пошло не так: ${error}`);
   })
   .finally(() => {
-    // выполнить после загрузки
   })
 }
 
 const cardsSectionRenderer = new Section({
   renderer: (item) => {
-    // console.log(item.owner._id);
     cardsSectionRenderer.addItem(generateCard(item, user.getId(), handleCardClick, handleDeleteClick, handleLikeClick, '#place-card', cardCssOptions));
   }
 }, '.places');
 
-function handleSubmitAddPlace(inputsData) {
-  // выполнить до загрузки
-  api.addNewPlace(
+const popupAddPlace = new PopupWithForm('#popup-add', (inputsData) => {
+  popupAddPlace.switchDownload('Сохранение...');
+  api.createPlace(
     { placeName: inputsData['add-form__name'],
       imageUrl: inputsData['add-form__link']
     })
@@ -125,32 +95,31 @@ function handleSubmitAddPlace(inputsData) {
       cardsSectionRenderer.addItem(generateCard(resData, user.getId(), handleCardClick, handleDeleteClick, handleLikeClick, '#place-card', cardCssOptions));
     })
     .catch(error => {
-      console.log(`Ошибка: ${error}`);
+      console.log(`Что-то пошло не так: ${error}`);
     })
     .finally(() => {
-      // выполнить после загрузки
+      popupAddPlace.switchDownload('Создать');
     })
-}
-
-const popupPlace = new PopupWithForm('#popup-add', handleSubmitAddPlace);
-popupPlace.setEventListeners();
-
-const formAddNewPlaceValidator = new FormValidator(validatorConfig, popupPlace.getForm());
+});
+popupAddPlace.setEventListeners();
+const formAddNewPlaceValidator = new FormValidator(validatorConfig, popupAddPlace.getForm());
 formAddNewPlaceValidator.enableValidation();
 
 function handleOpenPopupAddPlace(event) {
   event.preventDefault();
   formAddNewPlaceValidator.resetValidation();
-  popupPlace.open();
+  popupAddPlace.open();
 }
 
 buttonOpenPopupAddNewPlace.addEventListener('click', handleOpenPopupAddPlace);
 
-function handleSubmitUserInfo(inputsData) {
-  // выполнить до загрузки
-  api.changeUserInfo({
+const popupEditUserInfo = new PopupWithForm('#popup-edit', (inputsData) => {
+  popupEditUserInfo.switchDownload('Сохранение...');
+  api.updateUserInfo(
+    {
     newName: inputsData['edit-form__name'],
-    newInfo: inputsData['edit-form__information'],})
+    newInfo: inputsData['edit-form__information'],
+    })
     .then(userData => {
       user.setUserInfo({
         newName: userData.name,
@@ -158,42 +127,53 @@ function handleSubmitUserInfo(inputsData) {
       });
     })
     .catch(error => {
-      console.log(`Ошибка: ${error}`);
+      console.log(`Что-то пошло не так: ${error}`);
     })
     .finally(() => {
-      // выполнить после загрузки
+      popupEditUserInfo.switchDownload('Сохранить');
     })
-}
-
-const popupEdit = new PopupWithForm('#popup-edit', handleSubmitUserInfo);
-popupEdit.setEventListeners();
-
-const formEditProfileValidator = new FormValidator(validatorConfig, popupEdit.getForm());
+});
+popupEditUserInfo.setEventListeners();
+const formEditProfileValidator = new FormValidator(validatorConfig, popupEditUserInfo.getForm());
 formEditProfileValidator.enableValidation();
 
 function handleOpenPopupProfile(event) {
   event.preventDefault();
 
   const { name, about } = user.getUserInfo();
-  const formElements = popupEdit.getForm().elements;
+  const formElements = popupEditUserInfo.getForm().elements;
 
   formElements['edit-form__name'].value = name;
   formElements['edit-form__information'].value = about;
 
   formEditProfileValidator.resetValidation();
-  popupEdit.open();
+  popupEditUserInfo.open();
 }
 
 buttonOpenPopupEditProfile.addEventListener('click', handleOpenPopupProfile);
 
-// выполнить до загрузки
-api.getInitialCards()
-  .then(dataCards => {
-    cardsSectionRenderer.rendereItems({ items: dataCards });
-  })
-  .catch(error => {
-    console.log(`Ошибка: ${error}`);
-  })
-  .finally(() => {
-    // выполнить после загрузки
-  })
+Promise.all([api.readUser(), api.readInitialPlaces()])
+.then(serverData => {
+  user = new UserInfo({
+    userAvatarSelector: '.profile__avatar',
+    userNameSelector: '#profile-name',
+    userInfoSelector: '#profile-info',
+  },
+  {
+    id: serverData[0]._id,
+    name: serverData[0].name,
+    about: serverData[0].about,
+    avatar: serverData[0].avatar
+  },
+  () => {
+    formChangeAvatarValidator.resetValidation();
+    popupChangeAvatar.open();
+  });
+  user.setListeners();
+  user.renderUserInfo();
+
+  cardsSectionRenderer.rendereItems({ items: serverData[1] });
+})
+.catch(error => {
+  console.log(`Что-то пошло не так: ${error}`);
+})

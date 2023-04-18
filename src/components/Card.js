@@ -1,3 +1,4 @@
+import noFoto from '../images/no-photo.jpg'
 export default class Card {
 
   constructor({ data, userId }, { handleCardClick, handleDeleteClick, handleLikeClick }, templateSelector, options) {
@@ -81,6 +82,18 @@ export default class Card {
     }
   }
 
+  _loadImage() {
+    this._imageElement.src = this._link;
+    this._imageElement.onload = () => {
+      this._imageElement.alt = `Фото ${this._name}`;
+    }
+    this._imageElement.onerror = () => {
+      this._imageElement.src = noFoto;
+      this._link = noFoto;
+      this._imageElement.alt = `Изображение отсутствует`;
+    }
+  }
+
   createCard() {
     this._element = this._getTemplate();
     this._buttonLikeElement = this._element.querySelector(this._options.buttonLikeSelector);
@@ -93,8 +106,7 @@ export default class Card {
     this._counterLikesElemtnt = this._element.querySelector(this._options.buttonCounterLikesSelector);
 
     this._nameElement.textContent = this._name;
-    this._imageElement.src = this._link;
-    this._imageElement.alt = `Фото ${this._name}`;
+    this._loadImage();
     this._counterLikesElemtnt.textContent = this._likes.length;
 
     if (this.isLiked()) {
