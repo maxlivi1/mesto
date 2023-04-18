@@ -17,5 +17,6 @@
 }
 
 .profile__btn-change:hover {
+  visibility: visible;
   opacity: 1;
 }

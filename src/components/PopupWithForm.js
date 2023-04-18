@@ -18,11 +18,17 @@ export default class PopupWithForm extends Popup {
     return this._formValues;
   }
 
+  setInputValues(data) {
+    this._inputList.forEach((input) => {
+      input.value = data[input.name];
+    })
+  }
+
   getForm() {
     return this._popupForm;
   }
 
-  switchDownload(text) {
+  switchButtonText(text) {
     this._submitButton.textContent = text;
   }
 
@@ -31,7 +37,6 @@ export default class PopupWithForm extends Popup {
     this._popupForm.addEventListener('submit', (event) => {
       event.preventDefault();
       this._handleFormSubmit(this._getInputValues());
-      this.close();
     });
   }
 

@@ -3,17 +3,17 @@ export default class Api {
     this._options = options;
   }
 
-  static listener = (response) => {
+  static checkResponse = (response) => {
     if (response.ok) {
       return response.json();
     }
     return Promise.reject(`Ошибка ${response.status} : ${response.statusText}`);
   }
 
-  readInitialPlaces() {
+  getInitialPlaces() {
     return fetch(`${this._options.baseUrl}${this._options.requestTo.places}`,
     { headers: this._options.headers })
-    .then(Api.listener);
+    .then(Api.checkResponse);
   }
 
   createPlace({ placeName, imageUrl }) {
@@ -23,19 +23,19 @@ export default class Api {
       headers: this._options.headers,
       body: JSON.stringify({ name: placeName, link: imageUrl })
     })
-    .then(Api.listener);
+    .then(Api.checkResponse);
   }
 
   deletePlace({ placeId }) {
     return fetch(`${this._options.baseUrl}${this._options.requestTo.places}/${placeId}`,
     { method: 'DELETE', headers: this._options.headers })
-    .then(Api.listener);
+    .then(Api.checkResponse);
   }
 
-  readUser() {
+  getUser() {
     return fetch(`${this._options.baseUrl}${this._options.requestTo.user}`,
     { headers: this._options.headers })
-    .then(Api.listener);
+    .then(Api.checkResponse);
   }
 
   updateUserInfo({ newName, newInfo }) {
@@ -45,7 +45,7 @@ export default class Api {
       headers: this._options.headers,
       body: JSON.stringify({ name: newName, about: newInfo })
     })
-    .then(Api.listener);
+    .then(Api.checkResponse);
   }
 
   updateUserAvatar({ newAvatar }) {
@@ -55,19 +55,19 @@ export default class Api {
       headers: this._options.headers,
       body: JSON.stringify({ avatar: newAvatar })
     })
-    .then(Api.listener);
+    .then(Api.checkResponse);
   }
 
   _createLikePlace(placeId) {
     return fetch(`${this._options.baseUrl}${this._options.requestTo.places}/${placeId}${this._options.requestTo.likes}`,
       { method: 'PUT', headers: this._options.headers })
-      .then(Api.listener);
+      .then(Api.checkResponse);
   }
 
   _deleteLikePlace(placeId) {
     return fetch(`${this._options.baseUrl}${this._options.requestTo.places}/${placeId}${this._options.requestTo.likes}`,
       { method: 'DELETE', headers: this._options.headers })
-      .then(Api.listener);
+      .then(Api.checkResponse);
   }
 
   likePlace({ isLiked, placeId }) {

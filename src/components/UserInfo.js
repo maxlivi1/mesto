@@ -4,11 +4,11 @@ export default class UserInfo {
     {
       userAvatarSelector,
       userNameSelector,
-      userInfoSelector
+      userInfoSelector,
+      userAvatarChangeButtonSelector
     }, { id, name, about, avatar }, handleChangeAvatar) {
     this._userAvatarElement = document.querySelector(userAvatarSelector);
-    this._userAvatarButtonElement = document.querySelector('.profile__btn-change');
-    this._userAvatarButtonActiveClass = 'profile__btn-change_active';
+    this._userAvatarButtonElement = document.querySelector(userAvatarChangeButtonSelector);
     this._userNameElement = document.querySelector(userNameSelector);
     this._userAboutElement = document.querySelector(userInfoSelector);
     this._id = id;
@@ -32,12 +32,6 @@ export default class UserInfo {
   }
 
   setListeners() {
-    this._userAvatarElement.addEventListener('mouseover', () => {
-      this._userAvatarButtonElement.classList.add(this._userAvatarButtonActiveClass);
-    });
-    this._userAvatarButtonElement.addEventListener('mouseout', () => {
-      this._userAvatarButtonElement.classList.remove(this._userAvatarButtonActiveClass);
-    })
     this._userAvatarButtonElement.addEventListener('click', () => {
       this._handleChangeAvatar();
     })

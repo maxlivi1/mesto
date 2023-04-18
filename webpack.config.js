@@ -67,5 +67,5 @@ module.exports = {
       filename: 'style.[contenthash].css'
     })
   ],
-  devtool: 'source-map'
+  devtool: 'eval-source-map'
 }

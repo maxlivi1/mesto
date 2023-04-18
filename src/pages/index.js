@@ -24,6 +24,7 @@ const popupDeletePlace = new PopupConsentToDeletion('#popup-delete-place', () =>
   api.deletePlace({ placeId: deletionObject.id })
   .then(() => {
     deletionObject.element.remove();
+    popupDeletePlace.close();
   })
   .catch(error => {
     console.log(`Что-то пошло не так: ${error}`);
@@ -32,16 +33,17 @@ const popupDeletePlace = new PopupConsentToDeletion('#popup-delete-place', () =>
 popupDeletePlace.setEventListeners();
 
 const popupChangeAvatar = new PopupWithForm('#popup-change-avatar', (inputData => {
-  popupChangeAvatar.switchDownload('Сохранение...');
+  popupChangeAvatar.switchButtonText('Сохранение...');
   api.updateUserAvatar({ newAvatar: inputData['change-avatar__link'] })
   .then(userData => {
     user.setUserAvatar({ newAvatar: userData.avatar });
+    popupChangeAvatar.close();
   })
   .catch(error => {
     console.log(`Что-то пошло не так: ${error}`);
   })
   .finally(() => {
-    popupChangeAvatar.switchDownload('Сохранить');
+    popupChangeAvatar.switchButtonText('Сохранить');
   })
 }));
 popupChangeAvatar.setEventListeners();
@@ -75,8 +77,6 @@ function handleLikeClick(place) {
   .catch(error => {
     console.log(`Что-то пошло не так: ${error}`);
   })
-  .finally(() => {
-  })
 }
 
 const cardsSectionRenderer = new Section({
@@ -86,19 +86,20 @@ const cardsSectionRenderer = new Section({
 }, '.places');
 
 const popupAddPlace = new PopupWithForm('#popup-add', (inputsData) => {
-  popupAddPlace.switchDownload('Сохранение...');
+  popupAddPlace.switchButtonText('Сохранение...');
   api.createPlace(
     { placeName: inputsData['add-form__name'],
       imageUrl: inputsData['add-form__link']
     })
     .then(resData => {
       cardsSectionRenderer.addItem(generateCard(resData, user.getId(), handleCardClick, handleDeleteClick, handleLikeClick, '#place-card', cardCssOptions));
+      popupAddPlace.close();
     })
     .catch(error => {
       console.log(`Что-то пошло не так: ${error}`);
     })
     .finally(() => {
-      popupAddPlace.switchDownload('Создать');
+      popupAddPlace.switchButtonText('Создать');
     })
 });
 popupAddPlace.setEventListeners();
@@ -114,23 +115,24 @@ function handleOpenPopupAddPlace(event) {
 buttonOpenPopupAddNewPlace.addEventListener('click', handleOpenPopupAddPlace);
 
 const popupEditUserInfo = new PopupWithForm('#popup-edit', (inputsData) => {
-  popupEditUserInfo.switchDownload('Сохранение...');
+  popupEditUserInfo.switchButtonText('Сохранение...');
   api.updateUserInfo(
     {
-    newName: inputsData['edit-form__name'],
-    newInfo: inputsData['edit-form__information'],
+    newName: inputsData['name'],
+    newInfo: inputsData['about'],
     })
     .then(userData => {
       user.setUserInfo({
         newName: userData.name,
         newInfo: userData.about,
       });
+      popupEditUserInfo.close();
     })
     .catch(error => {
       console.log(`Что-то пошло не так: ${error}`);
     })
     .finally(() => {
-      popupEditUserInfo.switchDownload('Сохранить');
+      popupEditUserInfo.switchButtonText('Сохранить');
     })
 });
 popupEditUserInfo.setEventListeners();
@@ -140,11 +142,7 @@ formEditProfileValidator.enableValidation();
 function handleOpenPopupProfile(event) {
   event.preventDefault();
 
-  const { name, about } = user.getUserInfo();
-  const formElements = popupEditUserInfo.getForm().elements;
-
-  formElements['edit-form__name'].value = name;
-  formElements['edit-form__information'].value = about;
+  popupEditUserInfo.setInputValues(user.getUserInfo());
 
   formEditProfileValidator.resetValidation();
   popupEditUserInfo.open();
@@ -152,18 +150,19 @@ function handleOpenPopupProfile(event) {
 
 buttonOpenPopupEditProfile.addEventListener('click', handleOpenPopupProfile);
 
-Promise.all([api.readUser(), api.readInitialPlaces()])
-.then(serverData => {
+Promise.all([api.getUser(), api.getInitialPlaces()])
+.then(([userData, cardsData]) => {
   user = new UserInfo({
     userAvatarSelector: '.profile__avatar',
     userNameSelector: '#profile-name',
     userInfoSelector: '#profile-info',
+    userAvatarChangeButtonSelector: '.profile__btn-change'
   },
   {
-    id: serverData[0]._id,
-    name: serverData[0].name,
-    about: serverData[0].about,
-    avatar: serverData[0].avatar
+    id: userData._id,
+    name: userData.name,
+    about: userData.about,
+    avatar: userData.avatar
   },
   () => {
     formChangeAvatarValidator.resetValidation();
@@ -172,7 +171,7 @@ Promise.all([api.readUser(), api.readInitialPlaces()])
   user.setListeners();
   user.renderUserInfo();
 
-  cardsSectionRenderer.rendereItems({ items: serverData[1] });
+  cardsSectionRenderer.rendereItems({ items: cardsData.reverse() });
 })
 .catch(error => {
   console.log(`Что-то пошло не так: ${error}`);
