@@ -34,7 +34,7 @@ popupDeletePlace.setEventListeners();
 
 const popupChangeAvatar = new PopupWithForm('#popup-change-avatar', (inputData => {
   popupChangeAvatar.switchButtonText('Сохранение...');
-  api.updateUserAvatar({ newAvatar: inputData['change-avatar__link'] })
+  api.updateUserAvatar({ newAvatar: inputData['url'] })
   .then(userData => {
     user.setUserAvatar({ newAvatar: userData.avatar });
     popupChangeAvatar.close();
@@ -88,8 +88,8 @@ const cardsSectionRenderer = new Section({
 const popupAddPlace = new PopupWithForm('#popup-add', (inputsData) => {
   popupAddPlace.switchButtonText('Сохранение...');
   api.createPlace(
-    { placeName: inputsData['add-form__name'],
-      imageUrl: inputsData['add-form__link']
+    { placeName: inputsData['name'],
+      imageUrl: inputsData['url']
     })
     .then(resData => {
       cardsSectionRenderer.addItem(generateCard(resData, user.getId(), handleCardClick, handleDeleteClick, handleLikeClick, '#place-card', cardCssOptions));

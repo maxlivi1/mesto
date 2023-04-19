@@ -49,9 +49,9 @@
         <form name="add-form" id="add-form" class="popup__form" action="#" novalidate>
           <h3 class="popup__title">Новое место</h3>
           <fieldset class="popup__editable-information">
-            <input name="add-form__name" id="add-form-name" class="popup__input popup__input_type_name" type="text" placeholder="Название" autocomplete="off" required minlength="2" maxlength="30">
+            <input name="name" id="add-form-name" class="popup__input popup__input_type_name" type="text" placeholder="Название" autocomplete="off" required minlength="2" maxlength="30">
             <span class="add-form-name-error popup__input-error"></span>
-            <input type="url" name="add-form__link" id="add-form-link" class="popup__input popup__input_type_job" placeholder="Ссылка на картинку" autocomplete="off" required>
+            <input type="url" name="url" id="add-form-link" class="popup__input popup__input_type_job" placeholder="Ссылка на картинку" autocomplete="off" required>
             <span class="add-form-link-error popup__input-error"></span>
           </fieldset>
           <button id="btn-add" class="button popup__btn-save" type="submit">Создать</button>
@@ -64,7 +64,7 @@
         <form name="change-avatar-form" id="change-avatar-form" class="popup__form" action="#" novalidate>
           <h3 class="popup__title">Обновить аватар</h3>
           <fieldset class="popup__editable-information">
-            <input type="url" name="change-avatar__link" id="change-avatar-link" class="popup__input popup__input_type_job" placeholder="Введите url адрес нового аватара" autocomplete="off" required>
+            <input type="url" name="url" id="change-avatar-link" class="popup__input popup__input_type_job" placeholder="Введите url адрес нового аватара" autocomplete="off" required>
             <span class="change-avatar-link-error popup__input-error"></span>
           </fieldset>
           <button class="button popup__btn-save" type="submit">Сохранить</button>
